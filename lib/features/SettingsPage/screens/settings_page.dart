@@ -9,6 +9,8 @@ class Settingscreen extends StatelessWidget {
     {'name':'मराठी','locale': Locale('mr','IN')},
     {'name':'हिंदी','locale': Locale('hi','IN')},
   ];
+
+  const Settingscreen({super.key});
   updateLanguage(Locale locale){
     Get.back();
     Get.updateLocale(locale);
@@ -18,7 +20,7 @@ class Settingscreen extends StatelessWidget {
         builder: (builder){
            return AlertDialog(
              title: Text('Choose Your Language'),
-             content: Container(
+             content: SizedBox(
                width: double.maxFinite,
                child: ListView.separated(
                  shrinkWrap: true,

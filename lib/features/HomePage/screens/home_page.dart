@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 
 class Homepage extends StatelessWidget {
-  Homepage({super.key});
+  const Homepage({super.key});
 
 
   @override
