@@ -1,32 +1,20 @@
-
-
-
+import 'package:dabbawala/Customer/CustomerLogin/pages/HomePage/customerHome.dart';
+import 'package:dabbawala/Customer/CustomerLogin/pages/Navigation/pages/custnavbar.dart';
+import 'package:dabbawala/Customer/CustomerLogin/pages/SignUp/screen/csignup.dart';
 import 'package:dabbawala/features/Navigation/navigation_menu.dart';
-
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../LoginPage/login_screen.dart';
-
-
-class SignupScreen extends StatelessWidget {
-  SignupScreen({super.key});
-
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final _formKey = GlobalKey<FormState>(); // Add a GlobalKey for the Form
-
+class LoginPage extends StatelessWidget {
   @override
-
   Widget build(BuildContext context) {
-   return Scaffold(
-      backgroundColor: const Color.fromARGB(242, 255, 255, 255),
+    return Scaffold(
+       backgroundColor: const Color.fromARGB(242, 255, 255, 255),
       body: Center(
         child: SingleChildScrollView(
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 30),
+            padding: EdgeInsets.symmetric(horizontal: 50),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -35,43 +23,42 @@ class SignupScreen extends StatelessWidget {
                   'assets/images/logo.png', // Replace with your logo
                   height: 80,
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 50),
                 // Welcome Text
                 Text(
-                  "Welcome!",
+                  "Welcome back!",
                   style: GoogleFonts.poppins(
                       fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 5),
                 Text(
                   "Sign In to your account",
-                  style: GoogleFonts.poppins(fontSize: 14, color: Colors.grey),
+                  style: GoogleFonts.poppins(fontSize: 15, color: Colors.grey),
                 ),
-                SizedBox(height: 30),
+                SizedBox(height: 50),
                 // Username Field
                 buildTextField(Icons.person, "Username"),
                 SizedBox(height: 15),
-                //Email feild
-                 buildTextField(Icons.person, "Email"),
-                SizedBox(height: 15),
                 // Password Field
                 buildTextField(Icons.lock, "Password", isPassword: true),
-                SizedBox(height: 20),
+                SizedBox(height: 60),
                 // Sign In Button
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.to(AnimatedNavBar());
+                  },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(13),
                     ),
                     backgroundColor: Colors.redAccent,
-                    padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15),
+                    padding: EdgeInsets.symmetric(horizontal: 60, vertical: 10),
                   ),
-                  child: Text("Sign in", style: GoogleFonts.poppins(fontSize: 18)),
+                 child: Text("Sign In",style: GoogleFonts.figtree(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.black38),),
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 30),
                 // Social Login Divider
-                Text("Or sign in with", style: GoogleFonts.poppins(color: Colors.grey)),
+                Text("-------- Or sign in with --------", style: GoogleFonts.poppins(color: Colors.grey)),
                 SizedBox(height: 15),
                 // Social Media Icons
                 Row(
@@ -89,13 +76,13 @@ class SignupScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Already have an account? ",
+                    Text("Don't have an account? ",
                         style: GoogleFonts.poppins(color: Colors.grey)),
                     GestureDetector(
                       onTap: () {
-                        Get.to(LoginScreen());
+                        Get.to(SignupPage());
                       },
-                      child: Text("Login here",
+                      child: Text("Sign up here",
                           style: GoogleFonts.poppins(
                               color: Colors.black38, fontWeight: FontWeight.bold)),
                     )
@@ -111,7 +98,7 @@ class SignupScreen extends StatelessWidget {
 
   Widget buildTextField(IconData icon, String hintText, {bool isPassword = false}) {
     return Container(
-      width: double.infinity,
+      width: double.maxFinite,
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
@@ -125,7 +112,7 @@ class SignupScreen extends StatelessWidget {
       child: TextField(
         obscureText: isPassword,
         decoration: InputDecoration(
-          prefixIcon: Icon(icon, color: Colors.black),
+          prefixIcon: Icon(icon, color: Colors.black38),
           hintText: hintText,
           filled: true,
           fillColor: Colors.white,
@@ -139,7 +126,7 @@ class SignupScreen extends StatelessWidget {
     );
   }
 
-  Widget socialButton(String assetPath) {
+   Widget socialButton(String assetPath) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -158,4 +145,4 @@ class SignupScreen extends StatelessWidget {
       ),
     );
   }
-  }
+}

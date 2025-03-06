@@ -1,5 +1,7 @@
-import 'package:dabbawala/features/HomePage/widgets/user_post.dart';
+import 'package:dabbawala/features/NotificationPage/controller/notification_controller.dart';
 import 'package:dabbawala/features/NotificationPage/screens/notificato_page.dart';
+import 'package:dabbawala/features/PostPage/screens/post_screen.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -22,47 +24,38 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        actions: [
-          IconButton(
-            icon: const Icon(
-                color: Colors.white, Icons.notifications, size: 28.0),
-            onPressed: () {
-              Get.to(NotificatonPage());
-            },
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.qr_code_sharp,
-              color: Colors.white,
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.notifications,
+                  color: Colors.white, size: 28.0),
+              onPressed: () {
+                Get.to(() => NotificationPage());
+              },
             ),
-          )
-        ],
-      ),
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'dabbawalas'.tr,
-              style: GoogleFonts.acme(color: Colors.black, fontSize: 20),
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: users.length,
-                itemBuilder: (context, index) {
-                  return UserPost(
-                    name: users[index],
-                  );
-                },
-              ),
-            )
           ],
         ),
-      ),
-    );
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                child: Text(
+                  'dabbawalas'.tr,
+                  style: TextStyle(color: Colors.black),
+                ),
+              )
+            ],
+          ),
+        )
+
+        // floatingActionButton: FloatingActionButton(
+        //   onPressed: () {
+        //     Get.to(() => PostScreen());
+        //   },
+        //   child: const Icon(Icons.add),
+        // ),
+        );
   }
 }
