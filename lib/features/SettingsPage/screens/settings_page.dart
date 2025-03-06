@@ -10,7 +10,7 @@ class Settingscreen extends StatelessWidget {
     {'name':'हिंदी','locale': Locale('hi','IN')},
   ];
 
-  const Settingscreen({super.key});
+   Settingscreen({super.key});
   updateLanguage(Locale locale){
     Get.back();
     Get.updateLocale(locale);

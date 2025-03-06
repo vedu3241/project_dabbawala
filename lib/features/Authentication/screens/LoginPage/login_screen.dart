@@ -1,132 +1,143 @@
-
 import 'package:dabbawala/features/Authentication/screens/SignUpPage/signup_screen.dart';
-import 'package:dabbawala/features/Navigation/navigation_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
-
-
 class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
-
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final _formKey = GlobalKey<FormState>(); // Add a GlobalKey for the Form
-
- 
-
- 
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Login'),
-      // ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey, // Attach the GlobalKey to the Form
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 90),
-                child: Container(
-                  child: Text("Welcome Back",style: GoogleFonts.acme(fontSize: 30),),
+      backgroundColor: const Color.fromARGB(242, 255, 255, 255),
+      body: Center(
+        child: SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 30),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // Logo
+                Image.asset(
+                  'assets/images/logo.png', // Replace with your logo
+                  height: 80,
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 40.0),
-                child: Image.asset(
-                  'assets/images/logo.png',
-                  height: 150,
+                SizedBox(height: 20),
+                // Welcome Text
+                Text(
+                  "Welcome back!",
+                  style: GoogleFonts.poppins(
+                      fontSize: 24, fontWeight: FontWeight.bold),
                 ),
-              ),
-              SizedBox(height: 30),
-              TextFormField(
-                controller: emailController,
-                decoration: InputDecoration(
-                  hintText: 'Enter Email',
-                  border: OutlineInputBorder(),
+                SizedBox(height: 5),
+                Text(
+                  "Login to your account",
+                  style: GoogleFonts.poppins(fontSize: 14, color: Colors.grey),
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Enter email';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 20),
-              TextFormField(
-                controller: passwordController,
-                obscureText: true,
-                decoration: InputDecoration(
-                  hintText: 'Enter Password',
-                  border: OutlineInputBorder(),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Enter password';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 30),
-              // Button with increased width and custom background color
-              SizedBox(
-                width: double.infinity, // Set the width to the full available width
-                child: ElevatedButton(
-                  onPressed: () {
-                    // if (_formKey.currentState!.validate()) {
-                    //   // Perform login action
-                    
-                    // }
-                   Get.to(Navbarpage());
-                  },
+                SizedBox(height: 30),
+                // Username Field
+                buildTextField(Icons.person, "Username"),
+                SizedBox(height: 15),
+                // Password Field
+                buildTextField(Icons.lock, "Password", isPassword: true),
+                SizedBox(height: 20),
+                // Sign In Button
+                ElevatedButton(
+                  onPressed: () {},
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 218, 63, 63), // Set the background color
-                    padding: EdgeInsets.symmetric(vertical: 15), // Adjust button height
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8), // Optional: rounded corners
+                      borderRadius: BorderRadius.circular(13),
                     ),
+                    backgroundColor: Colors.redAccent,
+                    padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15),
                   ),
-                  child: Text('Login', style: TextStyle(fontSize: 18,color: Colors.white)),
+                  child: Text("Sign in", style: GoogleFonts.poppins(fontSize: 18)),
                 ),
-              ),
-              SizedBox(height: 30,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Dont have an account?'),
-                  TextButton(onPressed: (){
-                   Get.to(()=> SignupScreen());
-                  }, child: Text('Sign Up'))
-                ],
-              ),
-              SizedBox(height: 10,),
-              InkWell(
-                 onTap: () async{
-              // Actioan when the image is clicked
-            
-             
-            },
-            borderRadius: BorderRadius.circular(8), // Adds a rounded ripple effect
-            child: Ink(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8), // Match with InkWell for consistency
-              ),
-              child: Image.asset(
-                'assets/images/google.jpg',
-                width: 100, // Adjust width as needed
-                height: 50, // Adjust height as needed
-              ),
-              ),
-              ),
-            ],
+                SizedBox(height: 20),
+                // Social Login Divider
+                Text("Or sign in with", style: GoogleFonts.poppins(color: Colors.grey)),
+                SizedBox(height: 15),
+                // Social Media Icons
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    socialButton("assets/icons/google.png"),
+                    SizedBox(width: 20),
+                    socialButton("assets/icons/facebook.png"),
+                    SizedBox(width: 20),
+                    socialButton("assets/icons/twitter.png"),
+                  ],
+                ),
+                SizedBox(height: 30),
+                // Sign Up Link
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Don't have an account? ",
+                        style: GoogleFonts.poppins(color: Colors.grey)),
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(SignupScreen());
+                      },
+                      child: Text("Sign up here",
+                          style: GoogleFonts.poppins(
+                              color: Colors.black38, fontWeight: FontWeight.bold)),
+                    )
+                  ],
+                )
+              ],
+            ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget buildTextField(IconData icon, String hintText, {bool isPassword = false}) {
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 10,
+            offset: Offset(2, 2),
+          ),
+        ],
+        borderRadius: BorderRadius.circular(30),
+      ),
+      child: TextField(
+        obscureText: isPassword,
+        decoration: InputDecoration(
+          prefixIcon: Icon(icon, color: Colors.black),
+          hintText: hintText,
+          filled: true,
+          fillColor: Colors.white,
+          contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(30),
+            borderSide: BorderSide.none,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget socialButton(String assetPath) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 10,
+            offset: Offset(2, 2),
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(10),
+        child: Image.asset(assetPath, height: 30),
       ),
     );
   }

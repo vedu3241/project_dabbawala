@@ -19,7 +19,7 @@ class Navbarpage extends StatelessWidget {
      Homepage(),
      AnalyticScreen(),
      ChatScreen(),
-     profilepage(),
+     ProfilePage(),
   ];
 
   final List<IconData> iconList = [
