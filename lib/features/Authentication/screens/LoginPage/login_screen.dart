@@ -1,4 +1,5 @@
 import 'package:dabbawala/features/Authentication/screens/SignUpPage/signup_screen.dart';
+import 'package:dabbawala/features/HomePage/screens/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -44,7 +45,9 @@ class LoginScreen extends StatelessWidget {
                 SizedBox(height: 20),
                 // Sign In Button
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.to(Homepage());
+                  },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(13),
@@ -52,11 +55,13 @@ class LoginScreen extends StatelessWidget {
                     backgroundColor: Colors.redAccent,
                     padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15),
                   ),
-                  child: Text("Sign in", style: GoogleFonts.poppins(fontSize: 18)),
+                  child:
+                      Text("Sign in", style: GoogleFonts.poppins(fontSize: 18)),
                 ),
                 SizedBox(height: 20),
                 // Social Login Divider
-                Text("Or sign in with", style: GoogleFonts.poppins(color: Colors.grey)),
+                Text("Or sign in with",
+                    style: GoogleFonts.poppins(color: Colors.grey)),
                 SizedBox(height: 15),
                 // Social Media Icons
                 Row(
@@ -82,7 +87,8 @@ class LoginScreen extends StatelessWidget {
                       },
                       child: Text("Sign up here",
                           style: GoogleFonts.poppins(
-                              color: Colors.black38, fontWeight: FontWeight.bold)),
+                              color: Colors.black38,
+                              fontWeight: FontWeight.bold)),
                     )
                   ],
                 )
@@ -94,7 +100,8 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  Widget buildTextField(IconData icon, String hintText, {bool isPassword = false}) {
+  Widget buildTextField(IconData icon, String hintText,
+      {bool isPassword = false}) {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
