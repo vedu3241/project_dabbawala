@@ -1,7 +1,6 @@
 
 
 
-import 'package:dabbawala/features/Navigation/navigation_menu.dart';
 
 import 'package:flutter/material.dart';
 
@@ -16,7 +15,7 @@ class SignupScreen extends StatelessWidget {
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  final _formKey = GlobalKey<FormState>(); // Add a GlobalKey for the Form
+  final _formKey = GlobalKey<FormState>(); 
 
   @override
 

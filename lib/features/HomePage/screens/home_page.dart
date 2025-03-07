@@ -1,10 +1,8 @@
 import 'package:dabbawala/features/NotificationPage/controller/notification_controller.dart';
 import 'package:dabbawala/features/NotificationPage/screens/notificato_page.dart';
-import 'package:dabbawala/features/PostPage/screens/post_screen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 
 

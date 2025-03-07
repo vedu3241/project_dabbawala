@@ -13,7 +13,7 @@ class AnimatedNavBar extends StatelessWidget {
 
   final List<Widget> pages = [
     Customerhome(),
-    HireScreen(),
+    CustomerFormScreen(),
     CalendarScreen(),
     CustProfile(),
   ];
@@ -24,6 +24,8 @@ class AnimatedNavBar extends StatelessWidget {
     Icons.calendar_today,
     Icons.person_4
   ];
+
+   AnimatedNavBar({super.key});
 
   @override
   Widget build(BuildContext context) {

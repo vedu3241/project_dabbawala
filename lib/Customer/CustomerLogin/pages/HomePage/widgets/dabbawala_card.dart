@@ -8,17 +8,17 @@ class DabbawalaCard extends StatelessWidget {
   final String imagePath;
 
   const DabbawalaCard({
-    Key? key,
+    super.key,
     required this.name,
     required this.area,
     required this.rating,
     required this.imagePath,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       padding: EdgeInsets.all(15),
       decoration: BoxDecoration(
         color: Colors.white,
