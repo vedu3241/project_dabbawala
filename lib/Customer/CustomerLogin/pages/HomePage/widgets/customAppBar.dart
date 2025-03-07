@@ -1,4 +1,4 @@
-import 'package:dabbawala/Customer/CustomerLogin/pages/HomePage/widgets/csSearch_bar.dart';
+import 'package:dabbawala/Customer/CustomerLogin/pages/HomePage/widgets/customer_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -10,7 +10,7 @@ class CustomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 60,right: 20,left: 20,bottom: 0),
+      padding: const EdgeInsets.only(top: 60, right: 20, left: 20, bottom: 0),
       child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.9, // 90% of screen width
         height: MediaQuery.of(context).size.height * 0.25,
@@ -52,7 +52,6 @@ class CustomAppBar extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  
                 ],
               ),
               SizedBox(height: 15),
@@ -69,7 +68,12 @@ class CustomAppBar extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: Customer_Search_Bar(),
+                child: CustomerSearchBar(
+                  onSearch: (query) {
+                    print(
+                        "Searching for: $query"); 
+                  },
+                ),
               ),
             ],
           ),
@@ -78,4 +82,3 @@ class CustomAppBar extends StatelessWidget {
     );
   }
 }
-

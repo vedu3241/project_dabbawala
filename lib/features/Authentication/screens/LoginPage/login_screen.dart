@@ -1,5 +1,6 @@
 import 'package:dabbawala/features/Authentication/screens/SignUpPage/signup_screen.dart';
 import 'package:dabbawala/features/HomePage/screens/home_page.dart';
+import 'package:dabbawala/features/Navigation/navigation_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -46,7 +47,7 @@ class LoginScreen extends StatelessWidget {
                 // Sign In Button
                 ElevatedButton(
                   onPressed: () {
-                    Get.to(Homepage());
+                    Get.to(Navbarpage());
                   },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
