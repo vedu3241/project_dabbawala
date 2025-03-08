@@ -18,18 +18,20 @@ class Button extends StatelessWidget {
       children: [
         Expanded(
           child: ElevatedButton(
-            
             onPressed: () => Get.to(LoginPage()), // Fixed class reference
             style: ElevatedButton.styleFrom(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10)
-              ),
-              padding: EdgeInsets.symmetric(vertical: 15),
-              textStyle: TextStyle(fontSize: 18),
-              backgroundColor: Colors.redAccent
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                padding: EdgeInsets.symmetric(vertical: 15),
+                textStyle: TextStyle(fontSize: 18),
+                backgroundColor: Colors.redAccent),
+            child: Text(
+              "Customer",
+              style: GoogleFonts.figtree(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black38),
             ),
-            child: Text("Customer",style: GoogleFonts.figtree(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.black38),),
-    
           ),
         ),
         SizedBox(width: 20), // Fix: Changed from `height` to `width`
@@ -38,13 +40,18 @@ class Button extends StatelessWidget {
             onPressed: () => Get.to(LoginScreen()),
             style: ElevatedButton.styleFrom(
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10)
-              ),
+                  borderRadius: BorderRadius.circular(10)),
               padding: EdgeInsets.symmetric(vertical: 15),
               textStyle: TextStyle(fontSize: 18),
               backgroundColor: Colors.orange,
             ),
-            child: Text("Dabbawala",style: GoogleFonts.figtree(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.black38),),
+            child: Text(
+              "Dabbawala",
+              style: GoogleFonts.figtree(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black38),
+            ),
           ),
         ),
       ],

@@ -1,11 +1,27 @@
 import 'package:dabbawala/features/Authentication/screens/SignUpPage/signup_screen.dart';
 import 'package:dabbawala/features/HomePage/screens/home_page.dart';
+import 'package:dabbawala/features/dab_nav_screen.dart';
+import 'package:dabbawala/utils/constants/used_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class LoginScreen extends StatelessWidget {
+/// Dobabawala Login Screen
+class LoginScreen extends StatefulWidget {
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  Future<void> login() async {
+    try {
+      final String url = '${UsedConstants.baseUrl}/auth/login';
+    } catch (err) {
+      print(err);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,13 +42,13 @@ class LoginScreen extends StatelessWidget {
                 // Welcome Text
                 Text(
                   "Welcome back!",
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.ubuntu(
                       fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 5),
                 Text(
                   "Login to your account",
-                  style: GoogleFonts.poppins(fontSize: 14, color: Colors.grey),
+                  style: GoogleFonts.ubuntu(fontSize: 14, color: Colors.grey),
                 ),
                 SizedBox(height: 30),
                 // Username Field
@@ -44,7 +60,7 @@ class LoginScreen extends StatelessWidget {
                 // Sign In Button
                 ElevatedButton(
                   onPressed: () {
-                    Get.to(Homepage());
+                    Get.to(DabAnimatedNavBar());
                   },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
@@ -53,13 +69,14 @@ class LoginScreen extends StatelessWidget {
                     backgroundColor: Colors.redAccent,
                     padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15),
                   ),
-                  child:
-                      Text("Sign in", style: GoogleFonts.poppins(fontSize: 18)),
+                  child: Text("Sign in",
+                      style: GoogleFonts.ubuntu(
+                          fontSize: 18, color: Colors.white)),
                 ),
                 SizedBox(height: 20),
                 // Social Login Divider
                 Text("Or sign in with",
-                    style: GoogleFonts.poppins(color: Colors.grey)),
+                    style: GoogleFonts.ubuntu(color: Colors.grey)),
                 SizedBox(height: 15),
                 // Social Media Icons
                 Row(
@@ -78,13 +95,13 @@ class LoginScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text("Don't have an account? ",
-                        style: GoogleFonts.poppins(color: Colors.grey)),
+                        style: GoogleFonts.ubuntu(color: Colors.grey)),
                     GestureDetector(
                       onTap: () {
                         Get.to(SignupScreen());
                       },
                       child: Text("Sign up here",
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.ubuntu(
                               color: Colors.black38,
                               fontWeight: FontWeight.bold)),
                     )

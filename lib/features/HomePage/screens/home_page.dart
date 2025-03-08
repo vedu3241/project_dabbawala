@@ -1,3 +1,4 @@
+import 'package:dabbawala/features/HomePage/widgets/user_post.dart';
 import 'package:dabbawala/features/NotificationPage/controller/notification_controller.dart';
 import 'package:dabbawala/features/NotificationPage/screens/notificato_page.dart';
 import 'package:dabbawala/features/PostPage/screens/post_screen.dart';
@@ -37,25 +38,21 @@ class _HomepageState extends State<Homepage> {
             ),
           ],
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                child: Text(
-                  'dabbawalas'.tr,
-                  style: TextStyle(color: Colors.black),
-                ),
-              )
-            ],
-          ),
-        )
-
-        // floatingActionButton: FloatingActionButton(
-        //   onPressed: () {
-        //     Get.to(() => PostScreen());
-        //   },
-        //   child: const Icon(Icons.add),
-        // ),
-        );
+        body: Column(
+          children: [
+            Image.asset(
+              'assets/images/logo.png', // Replace with your logo
+              height: 80,
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: users.length,
+                itemBuilder: (context, index) {
+                  return UserPost(name: users[index]);
+                },
+              ),
+            ),
+          ],
+        ));
   }
 }

@@ -18,25 +18,24 @@ class RoleSelectionPage extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 180, left: 20, right: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // Image.asset('assets/images/logo.png',width: 300,),
-              SizedBox(height: 445),
-              Text(
-                "Login as?",
-                style: GoogleFonts.figtree(fontSize: 32, fontWeight: FontWeight.bold),
-
-              ),
-              SizedBox(height: 40),
-              Button(),
-            ],
-          ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Spacer(),
+            Text(
+              "Login as?",
+              style: GoogleFonts.figtree(
+                  fontSize: 32, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: Button(),
+            ),
+            const SizedBox(height: 50)
+          ],
         ),
       ),
     );
   }
 }
-
