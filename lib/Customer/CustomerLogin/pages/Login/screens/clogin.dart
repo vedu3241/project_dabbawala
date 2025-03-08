@@ -7,6 +7,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoginPage extends StatelessWidget {
+  const LoginPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,16 +16,16 @@ class LoginPage extends StatelessWidget {
       body: Center(
         child: SingleChildScrollView(
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 50),
+            padding: EdgeInsets.symmetric(horizontal: 30),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 // Logo
                 Image.asset(
                   'assets/images/logo.png', // Replace with your logo
-                  height: 80,
+                  height: 70,
                 ),
-                SizedBox(height: 50),
+                SizedBox(height: 30),
                 // Welcome Text
                 Text(
                   "Welcome back!",

@@ -1,8 +1,5 @@
-import 'package:dabbawala/features/Authentication/screens/LoginPage/login_screen.dart';
-import 'package:dabbawala/Customer/CustomerLogin/pages/Login/screens/clogin.dart';
 import 'package:dabbawala/Customer/CustomerLogin/widgets/button.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class RoleSelectionPage extends StatelessWidget {

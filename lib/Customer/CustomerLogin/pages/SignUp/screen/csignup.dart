@@ -1,5 +1,3 @@
-import 'package:dabbawala/features/Authentication/screens/LoginPage/login_screen.dart';
-import 'package:dabbawala/Customer/CustomerLogin/pages/HomePage/customerHome.dart';
 import 'package:dabbawala/Customer/CustomerLogin/pages/Login/screens/clogin.dart';
 import 'package:dabbawala/Customer/CustomerLogin/pages/Navigation/pages/custnavbar.dart';
 import 'package:flutter/material.dart';
@@ -16,25 +14,25 @@ class SignupPage extends StatelessWidget {
       body: Center(
         child: SingleChildScrollView(
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 50),
+            padding: EdgeInsets.symmetric(horizontal: 30),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 // Logo
                 Image.asset(
                   'assets/images/logo.png', // Replace with your logo
-                  height: 80,
+                  height: 70,
                 ),
-                SizedBox(height: 50),
+                SizedBox(height: 30),
                 // Welcome Text
                 Text(
-                  "Welcome back!",
+                  "Welcome!",
                   style: GoogleFonts.poppins(
                       fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 5),
                 Text(
-                  "Login to your account",
+                  "Create your account",
                   style: GoogleFonts.poppins(fontSize: 15, color: Colors.grey),
                 ),
                 SizedBox(height: 50),
@@ -46,7 +44,7 @@ class SignupPage extends StatelessWidget {
                 SizedBox(height: 15),
                 // Password Field
                 buildTextField(Icons.lock, "Password", isPassword: true),
-                SizedBox(height: 60),
+                SizedBox(height: 35),
                 // Sign In Button
                 ElevatedButton(
                   onPressed: () {
@@ -61,12 +59,22 @@ class SignupPage extends StatelessWidget {
                   ),
                  child: Text("Sign Up",style: GoogleFonts.figtree(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.black38),),
                 ),
+                 SizedBox(height: 30),
+                // Social Login Divider
+                Text("-------- Or sign in with --------", style: GoogleFonts.poppins(color: Colors.grey)),
+                SizedBox(height: 15),
+                // Social Media Icons
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    socialButton("assets/icons/google.png"),
+                    SizedBox(width: 20),
+                    socialButton("assets/icons/facebook.png"),
+                    SizedBox(width: 20),
+                    socialButton("assets/icons/twitter.png"),
+                  ],
+                ),
                 SizedBox(height: 30),
-                // // Social Login Divider
-                // Text("-------- Or sign in with --------", style: GoogleFonts.poppins(color: Colors.grey)),
-                // SizedBox(height: 15),
-                // SizedBox(height: 30),
-                // Sign Up Link
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -116,6 +124,26 @@ Widget buildTextField(IconData icon, String hintText, {bool isPassword = false})
             borderSide: BorderSide.none,
           ),
         ),
+      ),
+    );
+  }
+
+   Widget socialButton(String assetPath) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 10,
+            offset: Offset(2, 2),
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(10),
+        child: Image.asset(assetPath, height: 30),
       ),
     );
   }
