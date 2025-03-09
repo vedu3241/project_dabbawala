@@ -26,7 +26,8 @@ class ChatMessage {
       id: map['id'] ?? '',
       content: map['content'] ?? '',
       userId: map['user_id'] ?? '',
-      createdAt: DateTime.parse(map['created_at'] ?? DateTime.now().toIso8601String()),
+      createdAt:
+          DateTime.parse(map['created_at'] ?? DateTime.now().toIso8601String()),
       userName: user?['name'] ?? 'Unknown User',
       userProfilePicUrl: user?['profile_pic_url'] ?? '',
     );
@@ -68,9 +69,9 @@ class _ChatScreenState extends State<ChatScreen> {
 
   void _setupScrollListener() {
     _scrollController.addListener(() {
-      if (_scrollController.hasClients && 
+      if (_scrollController.hasClients &&
           _scrollController.position.pixels >=
-          _scrollController.position.maxScrollExtent - 200) {
+              _scrollController.position.maxScrollExtent - 200) {
         if (!_isLoadingMore && _hasMore) {
           _loadMoreMessages();
         }
@@ -84,58 +85,61 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void _setupRealtimeSubscription() {
-  _realtimeChannel = Supabase.instance.client.channel('chat_${widget.groupId}',
-      opts: const RealtimeChannelConfig(self: true));
+    _realtimeChannel = Supabase.instance.client.channel(
+        'chat_${widget.groupId}',
+        opts: const RealtimeChannelConfig(self: true));
 
-  _realtimeChannel?.onPostgresChanges(
-    event: PostgresChangeEvent.insert, // ✅ Correct event type
-    schema: 'public',
-    table: 'messages',
-    filter: PostgresChangeFilter(type: PostgresChangeFilterType.eq, column: 'group_id', value: 200), // ✅ Correct filter syntax
-    callback: (payload) async {
-      final message = payload.newRecord as Map<String, dynamic>?;
-      if (message == null) return; // ✅ Prevents null errors
+    _realtimeChannel?.onPostgresChanges(
+      event: PostgresChangeEvent.insert, // ✅ Correct event type
+      schema: 'public',
+      table: 'messages',
+      filter: PostgresChangeFilter(
+          type: PostgresChangeFilterType.eq,
+          column: 'group_id',
+          value: 200), // ✅ Correct filter syntax
+      callback: (payload) async {
+        final message = payload.newRecord as Map<String, dynamic>?;
+        if (message == null) return; // ✅ Prevents null errors
 
-      try {
-        // Fetch user details for the new message
-        final userResponse = await Supabase.instance.client
-            .from('users')
-            .select()
-            .eq('id', message['user_id'])
-            .single();
+        try {
+          // Fetch user details for the new message
+          final userResponse = await Supabase.instance.client
+              .from('users')
+              .select()
+              .eq('id', message['user_id'])
+              .single();
 
-        final newMessage = ChatMessage.fromMap({
-          ...message,
-          'users': userResponse,
-        });
-
-        if (mounted && !_messages.any((msg) => msg.id == newMessage.id)) {
-          setState(() {
-            _messages.insert(0, newMessage);
+          final newMessage = ChatMessage.fromMap({
+            ...message,
+            'users': userResponse,
           });
 
-          // ✅ Ensure safe scrolling
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            if (_scrollController.hasClients &&
-                _scrollController.position.pixels <=
-                    _scrollController.position.minScrollExtent + 50) {
-              _scrollController.animateTo(
-                _scrollController.position.minScrollExtent,
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeOut,
-              );
-            }
-          });
+          if (mounted && !_messages.any((msg) => msg.id == newMessage.id)) {
+            setState(() {
+              _messages.insert(0, newMessage);
+            });
+
+            // ✅ Ensure safe scrolling
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              if (_scrollController.hasClients &&
+                  _scrollController.position.pixels <=
+                      _scrollController.position.minScrollExtent + 50) {
+                _scrollController.animateTo(
+                  _scrollController.position.minScrollExtent,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeOut,
+                );
+              }
+            });
+          }
+        } catch (e) {
+          debugPrint('Error processing new message: $e'); // ✅ Logs any errors
         }
-      } catch (e) {
-        debugPrint('Error processing new message: $e'); // ✅ Logs any errors
-      }
-    },
-  );
+      },
+    );
 
-  _realtimeChannel?.subscribe(); // ✅ Subscribe to the channel
-}
-
+    _realtimeChannel?.subscribe(); // ✅ Subscribe to the channel
+  }
 
   Future<void> _loadMessages({bool initial = false}) async {
     if (initial) {
@@ -156,9 +160,8 @@ class _ChatScreenState extends State<ChatScreen> {
           .range(_offset, _offset + _limit - 1);
 
       if (response != null && response is List<dynamic>) {
-        final newMessages = response
-            .map((msg) => ChatMessage.fromMap(msg))
-            .toList();
+        final newMessages =
+            response.map((msg) => ChatMessage.fromMap(msg)).toList();
 
         if (mounted) {
           setState(() {
@@ -206,7 +209,8 @@ class _ChatScreenState extends State<ChatScreen> {
           child: Padding(
             padding: const EdgeInsets.all(12),
             child: Column(
-              crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+              crossAxisAlignment:
+                  isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
               children: [
                 if (!isMe)
                   Row(
@@ -218,7 +222,9 @@ class _ChatScreenState extends State<ChatScreen> {
                             ? NetworkImage(message.userProfilePicUrl)
                             : null,
                         child: message.userProfilePicUrl.isEmpty
-                            ? Text(message.userName.isNotEmpty ? message.userName[0] : '?')
+                            ? Text(message.userName.isNotEmpty
+                                ? message.userName[0]
+                                : '?')
                             : null,
                       ),
                       const SizedBox(width: 8),
@@ -336,9 +342,10 @@ class _ChatScreenState extends State<ChatScreen> {
                           borderSide: BorderSide.none,
                         ),
                         filled: true,
-                        fillColor: Theme.of(context).brightness == Brightness.light
-                            ? Colors.grey[200]
-                            : Colors.grey[800],
+                        fillColor:
+                            Theme.of(context).brightness == Brightness.light
+                                ? Colors.grey[200]
+                                : Colors.grey[800],
                         contentPadding: const EdgeInsets.symmetric(
                           horizontal: 20,
                           vertical: 10,

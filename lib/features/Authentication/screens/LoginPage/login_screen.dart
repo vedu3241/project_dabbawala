@@ -1,11 +1,17 @@
+import 'dart:convert';
+
 import 'package:dabbawala/features/Authentication/screens/SignUpPage/signup_screen.dart';
 import 'package:dabbawala/features/HomePage/screens/home_page.dart';
+import 'package:dabbawala/features/authentication/controllers/login_api_service.dart';
 import 'package:dabbawala/features/dab_nav_screen.dart';
 import 'package:dabbawala/utils/constants/used_constants.dart';
+import 'package:dabbawala/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
 
 /// Dobabawala Login Screen
 class LoginScreen extends StatefulWidget {
@@ -14,11 +20,30 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  final LoginApiService _loginApiService = LoginApiService();
+  //Login function
   Future<void> login() async {
-    try {
-      final String url = '${UsedConstants.baseUrl}/auth/login';
-    } catch (err) {
-      print(err);
+    String username = usernameController.text.trim();
+    String password = passwordController.text.trim();
+
+    // Null check for username and password
+    if (username.isEmpty || password.isEmpty) {
+      THelperFunctions.showSnackBar("Please fill in both fields");
+      return; // Exit the method if either field is empty
+    }
+
+    bool isSuccess = await _loginApiService.login(username, password);
+
+    if (isSuccess) {
+      // Navigate to the next screen if login is successful
+      Get.to(DabAnimatedNavBar());
+      THelperFunctions.showSnackBar("Login successful");
+    } else {
+      // Show error message if login failed
+      THelperFunctions.showSnackBar("Login failed");
     }
   }
 
@@ -52,15 +77,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 SizedBox(height: 30),
                 // Username Field
-                buildTextField(Icons.person, "Username"),
+                buildTextField(usernameController, Icons.person, "Username"),
                 SizedBox(height: 15),
                 // Password Field
-                buildTextField(Icons.lock, "Password", isPassword: true),
+                buildTextField(passwordController, Icons.lock, "Password",
+                    isPassword: true),
                 SizedBox(height: 20),
                 // Sign In Button
                 ElevatedButton(
                   onPressed: () {
-                    Get.to(DabAnimatedNavBar());
+                    login();
                   },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
@@ -115,7 +141,8 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget buildTextField(IconData icon, String hintText,
+  Widget buildTextField(
+      TextEditingController controller, IconData icon, String hintText,
       {bool isPassword = false}) {
     return Container(
       width: double.infinity,
@@ -130,6 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
         borderRadius: BorderRadius.circular(30),
       ),
       child: TextField(
+        controller: controller,
         obscureText: isPassword,
         decoration: InputDecoration(
           prefixIcon: Icon(icon, color: Colors.black),

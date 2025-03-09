@@ -46,6 +46,7 @@ dependencies:
   supabase_flutter: ^2.8.4
   shared_preferences: ^2.5.2
   timeago: ^3.2.2
+  get_storage: ^2.1.1
  
 
 dev_dependencies:
