@@ -1,6 +1,5 @@
 import 'package:dabbawala/features/AnalytisPage/screens/analytic_screen.dart';
 import 'package:dabbawala/features/ChatPage/screen/chat_list_screen.dart';
-import 'package:dabbawala/features/ChatPage/screen/chat_screen.dart';
 import 'package:dabbawala/features/HomePage/screens/home_page.dart';
 import 'package:dabbawala/features/Navigation/controllers/navbar_controller.dart';
 import 'package:dabbawala/features/PostPage/screens/post_screen.dart';

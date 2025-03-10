@@ -1,7 +1,7 @@
+import 'package:dabbawala/Customer/CustomerLogin/pages/Settings/pages/setting_screen.dart';
 import 'package:dabbawala/features/Role/screen/roleselection.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CustProfile extends StatelessWidget {
@@ -18,8 +18,8 @@ class CustProfile extends StatelessWidget {
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {},
         ),
-        title: const Text(
-          "Profile",
+        title:  Text(
+          "profile".tr,
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -51,15 +51,15 @@ class CustProfile extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  _buildStatItem("12", "Customer"),
-                  _buildStatItem("1200", "Points"),
-                  _buildStatItem("24", "Ratings"),
+                  _buildStatItem("12", "customer".tr),
+                  _buildStatItem("1200", "points".tr),
+                  _buildStatItem("24", "ratings".tr),
                 ],
               ),
             ),
             const SizedBox(height: 20),
             // Menu Items
-            _buildProfileOption(Icons.card_membership, "Membership",
+            _buildProfileOption(Icons.card_membership, "membership".tr,
                 trailing: Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -67,15 +67,17 @@ class CustProfile extends StatelessWidget {
                     color: Colors.yellow,
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: const Text(
-                    "1200 Points",
+                  child:  Text(
+                    "1200 points".tr,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 )),
             _buildProfileOption(Icons.payment, "Gogopay"),
-            _buildProfileOption(Icons.notifications, "Notification"),
-            _buildProfileOption(Icons.settings, "Settings"),
-            _buildProfileOption(Icons.logout, "Logout",onTap: () {
+            _buildProfileOption(Icons.notifications, "notification".tr),
+            _buildProfileOption(Icons.settings, "settings".tr,onTap: () {
+              Get.to(CustSettingscreen());
+            }),
+            _buildProfileOption(Icons.logout, "logout".tr,onTap: () {
               Get.to(RoleSelectionPage());
             }, textColor: Colors.red,),
           ],

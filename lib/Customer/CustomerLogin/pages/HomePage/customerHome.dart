@@ -1,6 +1,7 @@
 import 'package:dabbawala/Customer/CustomerLogin/pages/HomePage/widgets/customAppBar.dart';
 import 'package:dabbawala/Customer/CustomerLogin/pages/HomePage/widgets/dabbawala_card.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Customerhome extends StatelessWidget {
@@ -18,7 +19,7 @@ class Customerhome extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 20), // Adjust left padding
             child: Text(
-              'Dabbawalas Around You!',
+              'dabbawalas'.tr,
               style: GoogleFonts.figtree(fontSize: 20),
             ),
           ),

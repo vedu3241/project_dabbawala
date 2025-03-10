@@ -6,7 +6,6 @@ import 'package:dabbawala/Customer/CustomerLogin/pages/Navigation/controller/cus
 import 'package:dabbawala/Customer/CustomerLogin/pages/Profile/pages/cust_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 class AnimatedNavBar extends StatelessWidget {
   final NavController navController = Get.put(NavController());

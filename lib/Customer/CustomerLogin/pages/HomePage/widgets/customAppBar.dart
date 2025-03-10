@@ -1,5 +1,6 @@
 import 'package:dabbawala/Customer/CustomerLogin/pages/HomePage/widgets/customer_search_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CustomAppBar extends StatelessWidget {
@@ -27,7 +28,7 @@ class CustomAppBar extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    "Hi Zubair,\nWelcome back",
+                    "Hi Zubair,\nwelcome".tr,
                     style: GoogleFonts.poppins(
                       color: Colors.white,
                       fontSize: 18,

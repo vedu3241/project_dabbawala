@@ -9,6 +9,8 @@ class CustomerFormScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final CustomerController controller = Get.put(CustomerController());
 
+  CustomerFormScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     // ✅ Receive hired dabbawala details

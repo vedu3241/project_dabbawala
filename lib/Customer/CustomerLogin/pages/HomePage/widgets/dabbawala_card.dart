@@ -10,12 +10,12 @@ class DabbawalaCard extends StatelessWidget {
   final String imagePath;
 
   const DabbawalaCard({
-    Key? key,
+    super.key,
     required this.name,
     required this.area,
     required this.rating,
     required this.imagePath,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

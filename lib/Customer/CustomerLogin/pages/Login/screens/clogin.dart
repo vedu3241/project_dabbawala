@@ -1,14 +1,44 @@
-import 'package:dabbawala/Customer/CustomerLogin/pages/HomePage/customerHome.dart';
+import 'package:dabbawala/Customer/CustomerLogin/pages/Login/controller/auth_controller.dart';
 import 'package:dabbawala/Customer/CustomerLogin/pages/Navigation/pages/custnavbar.dart';
 import 'package:dabbawala/Customer/CustomerLogin/pages/SignUp/screen/csignup.dart';
-import 'package:dabbawala/features/Navigation/navigation_menu.dart';
+import 'package:dabbawala/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+
+   Future<void> clogin() async {
+    String email = emailController.text.trim();
+    String password = passwordController.text.trim();
+
+    // Null check for username and password
+    if (email.isEmpty || password.isEmpty) {
+      THelperFunctions.showSnackBar("Please fill in both fields");
+      return; // Exit the method if either field is empty
+    }
+
+    // bool isSuccess = await _loginApiService.login(username, password);
+bool isSuccess = await CLoginApiService().clogin(email, password);
+    if (isSuccess) {
+      // Navigate to the next screen if login is successful
+      Get.to(AnimatedNavBar());
+      THelperFunctions.showSnackBar("Login successful");
+    } else {
+      // Show error message if login failed
+      THelperFunctions.showSnackBar("Login failed");
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,15 +69,15 @@ class LoginPage extends StatelessWidget {
                 ),
                 SizedBox(height: 50),
                 // Username Field
-                buildTextField(Icons.person, "Username"),
+                buildTextField(Icons.mail, "Email",emailController),
                 SizedBox(height: 15),
                 // Password Field
-                buildTextField(Icons.lock, "Password", isPassword: true),
+                buildTextField(Icons.lock, "Password", isPassword: true,passwordController),
                 SizedBox(height: 60),
                 // Sign In Button
                 ElevatedButton(
                   onPressed: () {
-                    Get.to(AnimatedNavBar());
+                 clogin();
                   },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
@@ -98,7 +128,7 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Widget buildTextField(IconData icon, String hintText, {bool isPassword = false}) {
+  Widget buildTextField(IconData icon, String hintText, TextEditingController emailController, {bool isPassword = false}) {
     return Container(
       width: double.maxFinite,
       decoration: BoxDecoration(

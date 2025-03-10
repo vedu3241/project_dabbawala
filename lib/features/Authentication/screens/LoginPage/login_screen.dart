@@ -15,6 +15,8 @@ import 'package:http/http.dart' as http;
 
 /// Dobabawala Login Screen
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }

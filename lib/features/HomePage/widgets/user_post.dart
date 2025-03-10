@@ -65,7 +65,7 @@ class UserPost extends StatelessWidget {
               text: TextSpan(
             children: [
               TextSpan(
-                  text: "${name} ",
+                  text: "$name ",
                   style: TextStyle(
                       color: Colors.black, fontWeight: FontWeight.bold)),
               TextSpan(
