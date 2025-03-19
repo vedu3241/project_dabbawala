@@ -1,20 +1,15 @@
-import 'dart:convert';
-
 import 'package:dabbawala/features/Authentication/screens/SignUpPage/signup_screen.dart';
-import 'package:dabbawala/features/HomePage/screens/home_page.dart';
 import 'package:dabbawala/features/authentication/controllers/login_api_service.dart';
 import 'package:dabbawala/features/dab_nav_screen.dart';
-import 'package:dabbawala/utils/constants/used_constants.dart';
 import 'package:dabbawala/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart' as http;
 
 /// Dobabawala Login Screen
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }

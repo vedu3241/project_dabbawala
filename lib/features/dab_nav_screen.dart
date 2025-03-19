@@ -1,5 +1,8 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:dabbawala/features/AnalytisPage/screens/analytic_screen.dart';
+import 'package:dabbawala/features/ChatPage/screen/chat_list_screen.dart';
+import 'package:dabbawala/features/ChatPage/screen/chat_screen.dart';
+import 'package:dabbawala/features/HomePage/screens/create_post.dart';
 
 import 'package:dabbawala/features/HomePage/screens/home_page.dart';
 import 'package:dabbawala/features/ProfilePage/screens/profile_page.dart';
@@ -13,14 +16,15 @@ class DabAnimatedNavBar extends StatelessWidget {
 
   final List<Widget> pages = [
     Homepage(),
+    CreatePostPage(),
     AnalyticScreen(),
-    // ChatScreen(),
-    AnalyticScreen(),
-    ProfilePage()
+    ChatListScreen(),
+    DabbawalaProfileScreen()
   ];
 
   final List<IconData> iconList = [
     Icons.home,
+    Icons.add_box,
     Icons.analytics,
     Icons.chat,
     Icons.person

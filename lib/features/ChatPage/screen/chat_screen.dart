@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'dart:async';
 import 'package:timeago/timeago.dart' as timeago;
@@ -90,16 +91,16 @@ class _ChatScreenState extends State<ChatScreen> {
         opts: const RealtimeChannelConfig(self: true));
 
     _realtimeChannel?.onPostgresChanges(
-      event: PostgresChangeEvent.insert, // ✅ Correct event type
+      event: PostgresChangeEvent.insert,
       schema: 'public',
       table: 'messages',
       filter: PostgresChangeFilter(
           type: PostgresChangeFilterType.eq,
           column: 'group_id',
-          value: 200), // ✅ Correct filter syntax
+          value: widget.groupId), // Fixed: Use dynamic group ID from widget
       callback: (payload) async {
         final message = payload.newRecord as Map<String, dynamic>?;
-        if (message == null) return; // ✅ Prevents null errors
+        if (message == null) return;
 
         try {
           // Fetch user details for the new message
@@ -119,7 +120,7 @@ class _ChatScreenState extends State<ChatScreen> {
               _messages.insert(0, newMessage);
             });
 
-            // ✅ Ensure safe scrolling
+            // Ensure safe scrolling
             WidgetsBinding.instance.addPostFrameCallback((_) {
               if (_scrollController.hasClients &&
                   _scrollController.position.pixels <=
@@ -133,12 +134,20 @@ class _ChatScreenState extends State<ChatScreen> {
             });
           }
         } catch (e) {
-          debugPrint('Error processing new message: $e'); // ✅ Logs any errors
+          debugPrint('Error processing new message: $e');
         }
       },
     );
 
-    _realtimeChannel?.subscribe(); // ✅ Subscribe to the channel
+    _realtimeChannel?.subscribe(
+      (status, error) {
+        if (status == RealtimeSubscribeStatus.subscribed) {
+          debugPrint('Successfully subscribed to chat channel');
+        } else if (error != null) {
+          debugPrint('Error subscribing to chat channel: $error');
+        }
+      },
+    );
   }
 
   Future<void> _loadMessages({bool initial = false}) async {
@@ -381,9 +390,10 @@ class _ChatScreenState extends State<ChatScreen> {
     _messageController.clear();
 
     try {
+      String userId = GetStorage().read('user_id');
       await Supabase.instance.client.from('messages').insert({
         'group_id': widget.groupId,
-        'user_id': Supabase.instance.client.auth.currentUser!.id,
+        'user_id': userId,
         'content': content,
       });
     } catch (e) {
