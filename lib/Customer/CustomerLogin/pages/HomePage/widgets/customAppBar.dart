@@ -1,21 +1,25 @@
+import 'package:dabbawala/Customer/CustomerLogin/pages/HomePage/controller/dabbawala_controller.dart';
 import 'package:dabbawala/Customer/CustomerLogin/pages/HomePage/widgets/customer_search_bar.dart';
+import 'package:dabbawala/Customer/CustomerLogin/pages/Profile/controller/profile_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class CustomAppBar extends StatelessWidget {
-  const CustomAppBar({
-    super.key,
-  });
 
+
+class CustomAppBar extends StatelessWidget {
+   CustomAppBar({super.key});
+   final ProfileController profileController = Get.find<ProfileController>();
+  final DabbawalaController dabbawalaController = Get.find<DabbawalaController>();
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 60, right: 20, left: 20, bottom: 0),
       child: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.9, // 90% of screen width
+        width: MediaQuery.of(context).size.width * 0.9,
         height: MediaQuery.of(context).size.height * 0.25,
         child: Container(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             color: Colors.deepPurple,
             borderRadius: BorderRadius.circular(16),
@@ -26,24 +30,28 @@ class CustomAppBar extends StatelessWidget {
               // Welcome Text
               Row(
                 children: [
-                  Text(
-                    "Hi Zubair,\nWelcome back",
-                    style: GoogleFonts.poppins(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                  Obx(
+                    () => Text(
+                      'Welcome, ${profileController.firstName.value.isEmpty 
+                          ? 'Guest' 
+                          : profileController.firstName.value}', // Updated here
+                      style: GoogleFonts.ubuntu(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                  Spacer(),
-                  Icon(Icons.notifications, color: Colors.white),
+                  const Spacer(),
+                  const Icon(Icons.notifications, color: Colors.white),
                 ],
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               // Location
               Row(
                 children: [
-                  Icon(Icons.location_on, color: Colors.white, size: 18),
-                  SizedBox(width: 4),
+                  const Icon(Icons.location_on, color: Colors.white, size: 18),
+                  const SizedBox(width: 4),
                   Text(
                     "Themadbrains, Abohar",
                     style: GoogleFonts.poppins(
@@ -54,14 +62,14 @@ class CustomAppBar extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 15),
+              const SizedBox(height: 15),
               // Search Bar
               Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(13),
                   boxShadow: [
-                    BoxShadow(
+                    const BoxShadow(
                       color: Colors.black12,
                       blurRadius: 6,
                       offset: Offset(0, 3),
@@ -69,11 +77,15 @@ class CustomAppBar extends StatelessWidget {
                   ],
                 ),
                 child: CustomerSearchBar(
-                  onSearch: (query) {
-                    print(
-                        "Searching for: $query"); 
-                  },
-                ),
+  onSearch: (query) {
+    if (query.isEmpty) {
+      dabbawalaController.fetchDabbawalas(); 
+    } else {
+      dabbawalaController.filterDabbawalas(query); 
+    }
+  },
+)
+
               ),
             ],
           ),

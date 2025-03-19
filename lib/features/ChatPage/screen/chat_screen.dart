@@ -168,7 +168,7 @@ class _ChatScreenState extends State<ChatScreen> {
           .order('created_at', ascending: false)
           .range(_offset, _offset + _limit - 1);
 
-      if (response != null && response is List<dynamic>) {
+      if (response is List<dynamic>) {
         final newMessages =
             response.map((msg) => ChatMessage.fromMap(msg)).toList();
 
