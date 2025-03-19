@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 class RegisterApiService {
   Future<bool> registerUser(String name, String username, String address, String mobileNo, String email, String password) async {
     try{
-      final String url = '${UsedConstants.baseUrl2}/auth/customer-register';
+      final String url = '${UsedConstants.baseUrl}/auth/customer-register';
       final Map<String, String> header = {
         'Content-Type': 'application/json',
       };
@@ -28,6 +28,7 @@ class RegisterApiService {
 
     final Map<String, dynamic> responseData = json.decode(response.body);
     if (response.statusCode == 200) {
+      print('Zubair');
       final box = GetStorage();
       box.write('access token', responseData['access_token']);
       box.write('user_id', responseData['user']['id']);

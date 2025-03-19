@@ -2,19 +2,15 @@ import 'package:dabbawala/Customer/CustomerLogin/pages/Hire/pages/hire_page.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import '../model/dabbawala_model.dart';
 
 class DabbawalaCard extends StatelessWidget {
-  final String name;
-  final String area;
-  final double rating;
-  final String imagePath;
+  final Dabbawala dabbawala;
 
   const DabbawalaCard({
     super.key,
-    required this.name,
-    required this.area,
-    required this.rating,
-    required this.imagePath,
+    required this.dabbawala,
   });
 
   @override
@@ -37,12 +33,19 @@ class DabbawalaCard extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(15),
-            child: Image.asset(
-              imagePath,
-              height: 80,
-              width: 80,
-              fit: BoxFit.cover,
-            ),
+            child: dabbawala.profilePicUrl != null
+                ? Image.network(
+                    dabbawala.profilePicUrl!,
+                    height: 80,
+                    width: 80,
+                    fit: BoxFit.cover,
+                  )
+                : Image.asset(
+                    'assets/images/default_profile.png',
+                    height: 80,
+                    width: 80,
+                    fit: BoxFit.cover,
+                  ),
           ),
           const SizedBox(width: 15),
           Expanded(
@@ -50,16 +53,16 @@ class DabbawalaCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  name,
-                  style: const TextStyle(
+                  dabbawala.name,
+                  style:  GoogleFonts.ubuntu(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  area,
-                  style: TextStyle(
+                  dabbawala.city,
+                  style: GoogleFonts.ubuntu(
                     fontSize: 14,
                     color: Colors.grey[600],
                   ),
@@ -69,7 +72,8 @@ class DabbawalaCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     RatingBarIndicator(
-                      rating: rating,
+                      rating:
+                          4.5, // Placeholder value, update with actual rating logic
                       itemBuilder: (context, index) => const Icon(
                         Icons.star,
                         color: Colors.amber,
@@ -77,16 +81,19 @@ class DabbawalaCard extends StatelessWidget {
                       itemCount: 5,
                       itemSize: 20,
                     ),
-                    // Add Hire Button
                     ElevatedButton(
                       onPressed: () {
-                        // Pass dabbawala info to hire page
-                        Get.to(CustomerFormScreen(), arguments: {
-                          'name': name,
-                          'area': area,
-                          'rating': rating,
-                          'imagePath': imagePath,
-                        });
+                        if (Get.context != null) {
+                          Get.to(CustomerFormScreen(), arguments: {
+                            'name': dabbawala.name,
+                            'area': dabbawala.city,
+                            'rating': 4.5,
+                            'imagePath': dabbawala.profilePicUrl ??
+                                'assets/images/default_profile.png',
+                          });
+                        } else {
+                          print("Error: Get.context is null");
+                        }
                       },
                       child: const Text('Hire'),
                     ),

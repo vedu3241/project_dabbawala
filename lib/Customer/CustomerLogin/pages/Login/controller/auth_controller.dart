@@ -5,11 +5,10 @@ import 'dart:convert';
 import 'package:dabbawala/utils/constants/used_constants.dart';
 
 
-
 class CLoginApiService {
   Future<bool> clogin(String email, String password) async {
     try {
-      final String url = '${UsedConstants.baseUrl2}/auth/login';
+      final String url = '${UsedConstants.baseUrl}/auth/login';
       final Map<String, String> header = {
         'Content-Type': 'application/json',
       };

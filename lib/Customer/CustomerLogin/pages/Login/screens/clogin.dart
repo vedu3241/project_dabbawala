@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -78,6 +79,7 @@ bool isSuccess = await CLoginApiService().clogin(email, password);
                 ElevatedButton(
                   onPressed: () {
                  clogin();
+             
                   },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
@@ -86,7 +88,7 @@ bool isSuccess = await CLoginApiService().clogin(email, password);
                     backgroundColor: Colors.redAccent,
                     padding: EdgeInsets.symmetric(horizontal: 60, vertical: 10),
                   ),
-                 child: Text("Sign In",style: GoogleFonts.figtree(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.black38),),
+                 child: Text("Sign In",style: GoogleFonts.figtree(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white),),
                 ),
                 SizedBox(height: 30),
                 // Social Login Divider
@@ -128,7 +130,7 @@ bool isSuccess = await CLoginApiService().clogin(email, password);
     );
   }
 
-  Widget buildTextField(IconData icon, String hintText, TextEditingController emailController, {bool isPassword = false}) {
+  Widget buildTextField(IconData icon, String hintText, TextEditingController controller, {bool isPassword = false}) {
     return Container(
       width: double.maxFinite,
       decoration: BoxDecoration(
@@ -142,6 +144,7 @@ bool isSuccess = await CLoginApiService().clogin(email, password);
         borderRadius: BorderRadius.circular(30),
       ),
       child: TextField(
+        controller: controller,
         obscureText: isPassword,
         decoration: InputDecoration(
           prefixIcon: Icon(icon, color: Colors.black38),
