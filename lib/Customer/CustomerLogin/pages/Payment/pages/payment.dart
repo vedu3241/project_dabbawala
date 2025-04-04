@@ -37,7 +37,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Payment Options'),
+        title: Text(
+          'Payment Options',
+          style: GoogleFonts.ubuntu(color: Colors.white),
+        ),
         backgroundColor: Colors.deepPurple,
       ),
       body: Padding(
@@ -47,11 +50,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
             buildPlanOption('Weekly', 500),
             buildPlanOption('Monthly', 1800),
             buildPlanOption('Yearly', 20000),
-            const Spacer(),
+            const SizedBox(height: 10),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.deepPurple,
-                padding: const EdgeInsets.symmetric(vertical: 12,horizontal: 30),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 12, horizontal: 30),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(13),
                 ),

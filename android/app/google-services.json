@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "316070307733",
+    "project_id": "dabbawala-pushnotification",
+    "storage_bucket": "dabbawala-pushnotification.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:316070307733:android:4a13eedf29db4d8bfbb89c",
+        "android_client_info": {
+          "package_name": "com.example.dabbawala"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvs_NapyhwmG7FwJO3xQm08pIsCdbdIMc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

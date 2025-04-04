@@ -61,6 +61,16 @@ class _ChatScreenState extends State<ChatScreen> {
   int _offset = 0;
   static const int _limit = 20;
 
+  // WhatsApp colors
+  final Color _whatsAppGreen = const Color(0xff780000);
+  final Color _whatsAppLightGreen = const Color(0xFF25D366);
+  final Color _whatsAppBackground = const Color(0xFFECE5DD);
+  final Color _whatsAppDarkBackground = const Color(0xFF262D31);
+  final Color _outgoingMessageColor = const Color(0xFFDCF8C6);
+  final Color _incomingMessageColor = const Color(0xFFFFFFFF);
+  final Color _outgoingMessageDarkColor = const Color(0xFF056162);
+  final Color _incomingMessageDarkColor = const Color(0xFF2A2C31);
+
   @override
   void initState() {
     super.initState();
@@ -97,13 +107,12 @@ class _ChatScreenState extends State<ChatScreen> {
       filter: PostgresChangeFilter(
           type: PostgresChangeFilterType.eq,
           column: 'group_id',
-          value: widget.groupId), // Fixed: Use dynamic group ID from widget
+          value: widget.groupId),
       callback: (payload) async {
         final message = payload.newRecord as Map<String, dynamic>?;
         if (message == null) return;
 
         try {
-          // Fetch user details for the new message
           final userResponse = await Supabase.instance.client
               .from('users')
               .select()
@@ -120,7 +129,6 @@ class _ChatScreenState extends State<ChatScreen> {
               _messages.insert(0, newMessage);
             });
 
-            // Ensure safe scrolling
             WidgetsBinding.instance.addPostFrameCallback((_) {
               if (_scrollController.hasClients &&
                   _scrollController.position.pixels <=
@@ -202,68 +210,147 @@ class _ChatScreenState extends State<ChatScreen> {
     await _loadMessages();
   }
 
-  Widget _buildMessageBubble(ChatMessage message, bool isMe) {
+  String _formatTime(DateTime dateTime) {
+    return '${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}';
+  }
+
+  String _formatDateHeader(DateTime date) {
+    final now = DateTime.now();
+    final yesterday = DateTime(now.year, now.month, now.day - 1);
+    final messageDate = DateTime(date.year, date.month, date.day);
+
+    if (messageDate == DateTime(now.year, now.month, now.day)) {
+      return 'TODAY';
+    } else if (messageDate == yesterday) {
+      return 'YESTERDAY';
+    } else {
+      // Format like "12 MARCH 2025"
+      final months = [
+        'JANUARY',
+        'FEBRUARY',
+        'MARCH',
+        'APRIL',
+        'MAY',
+        'JUNE',
+        'JULY',
+        'AUGUST',
+        'SEPTEMBER',
+        'OCTOBER',
+        'NOVEMBER',
+        'DECEMBER'
+      ];
+      return '${date.day} ${months[date.month - 1]} ${date.year}';
+    }
+  }
+
+  Widget _buildWhatsAppMessageBubble(ChatMessage message, bool isMe) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final bubbleColor = isMe
+        ? (isDarkMode ? _outgoingMessageDarkColor : _outgoingMessageColor)
+        : (isDarkMode ? _incomingMessageDarkColor : _incomingMessageColor);
+    final textColor = isDarkMode ? Colors.white : Colors.black87;
+
     return Align(
       alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
       child: ConstrainedBox(
         constraints: BoxConstraints(
-          maxWidth: MediaQuery.of(context).size.width * 0.75,
+          maxWidth: MediaQuery.of(context).size.width * 0.8,
         ),
-        child: Card(
-          color: isMe ? Theme.of(context).primaryColor : Colors.grey[100],
-          elevation: 2,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
+        child: Container(
+          margin: EdgeInsets.only(
+            left: isMe ? 60 : 10,
+            right: isMe ? 10 : 60,
+            top: 5,
+            bottom: 5,
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(12),
-            child: Column(
-              crossAxisAlignment:
-                  isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-              children: [
-                if (!isMe)
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      CircleAvatar(
-                        radius: 16,
-                        backgroundImage: message.userProfilePicUrl.isNotEmpty
-                            ? NetworkImage(message.userProfilePicUrl)
-                            : null,
-                        child: message.userProfilePicUrl.isEmpty
-                            ? Text(message.userName.isNotEmpty
-                                ? message.userName[0]
-                                : '?')
-                            : null,
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        message.userName,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          decoration: BoxDecoration(
+            color: bubbleColor,
+            borderRadius: BorderRadius.only(
+              topLeft: const Radius.circular(10),
+              topRight: const Radius.circular(10),
+              bottomLeft: isMe ? const Radius.circular(10) : Radius.zero,
+              bottomRight: isMe ? Radius.zero : const Radius.circular(10),
+            ),
+          ),
+          child: Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8, 8, 8, 21),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (!isMe)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 4),
+                        child: Text(
+                          message.userName,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13,
+                            color: _whatsAppGreen,
+                          ),
                         ),
                       ),
-                    ],
-                  ),
-                const SizedBox(height: 4),
-                Text(
-                  message.content,
-                  style: TextStyle(
-                    color: isMe ? Colors.white : Colors.black87,
-                    fontSize: 16,
-                  ),
+                    Text(
+                      message.content,
+                      style: TextStyle(
+                        color: textColor,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 4),
-                Text(
-                  timeago.format(message.createdAt),
-                  style: TextStyle(
-                    color: isMe ? Colors.white70 : Colors.black54,
-                    fontSize: 12,
-                  ),
+              ),
+              Positioned(
+                bottom: 4,
+                right: 8,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      _formatTime(message.createdAt),
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: isDarkMode ? Colors.grey[300] : Colors.grey[600],
+                      ),
+                    ),
+                    const SizedBox(width: 3),
+                    if (isMe)
+                      Icon(
+                        Icons.check,
+                        size: 14,
+                        color: isDarkMode ? Colors.grey[300] : Colors.grey[600],
+                      ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDateHeader(DateTime date) {
+    return Center(
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+        decoration: BoxDecoration(
+          color: Theme.of(context).brightness == Brightness.dark
+              ? Colors.grey[800]
+              : Colors.grey[200],
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Text(
+          _formatDateHeader(date),
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w500,
+            color: Theme.of(context).brightness == Brightness.dark
+                ? Colors.grey[400]
+                : Colors.grey[600],
           ),
         ),
       ),
@@ -273,112 +360,295 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     final currentUserId = Supabase.instance.client.auth.currentUser?.id;
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final primaryColor = isDarkMode ? _whatsAppLightGreen : _whatsAppGreen;
+    final backgroundColor =
+        isDarkMode ? _whatsAppDarkBackground : _whatsAppBackground;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Chat'),
-        elevation: 2,
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: _isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : Stack(
-                    children: [
-                      ListView.builder(
-                        reverse: true,
-                        controller: _scrollController,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 8,
-                        ),
-                        itemCount: _messages.length + (_hasMore ? 1 : 0),
-                        itemBuilder: (context, index) {
-                          if (index == _messages.length) {
-                            return const Center(
-                              child: Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: CircularProgressIndicator(),
-                              ),
-                            );
-                          }
-
-                          final message = _messages[index];
-                          final isMe = message.userId == currentUserId;
-
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 8),
-                            child: _buildMessageBubble(message, isMe),
-                          );
-                        },
-                      ),
-                      if (_isLoadingMore)
-                        const Positioned(
-                          top: 0,
-                          left: 0,
-                          right: 0,
-                          child: LinearProgressIndicator(),
-                        ),
-                    ],
-                  ),
+        elevation: 0,
+        backgroundColor: primaryColor,
+        foregroundColor: Colors.white,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.white,
           ),
-          if (!widget.messagingDisabled)
-            Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).cardColor,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    blurRadius: 4,
-                    offset: const Offset(0, -2),
-                  ),
-                ],
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        titleSpacing: 0,
+        title: Row(
+          children: [
+            CircleAvatar(
+              radius: 18,
+              backgroundColor: Colors.grey[300],
+              child: const Icon(
+                Icons.group,
+                color: Colors.white,
               ),
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: TextField(
-                      controller: _messageController,
-                      maxLines: null,
-                      keyboardType: TextInputType.multiline,
-                      textCapitalization: TextCapitalization.sentences,
-                      decoration: InputDecoration(
-                        hintText: 'Type a message...',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(24),
-                          borderSide: BorderSide.none,
-                        ),
-                        filled: true,
-                        fillColor:
-                            Theme.of(context).brightness == Brightness.light
-                                ? Colors.grey[200]
-                                : Colors.grey[800],
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 10,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  MaterialButton(
-                    onPressed: _sendMessage,
-                    shape: const CircleBorder(),
-                    color: Theme.of(context).primaryColor,
-                    padding: const EdgeInsets.all(12),
-                    child: const Icon(
-                      Icons.send,
+                  const Text(
+                    'Group Chat',
+                    style: TextStyle(
                       color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
+                  const SizedBox(height: 2),
+                  // Text(
+                  //   'Tap here for group info',
+                  //   style: TextStyle(
+                  //     fontSize: 12,
+                  //     color: Colors.white.withOpacity(0.8),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
+          ],
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(
+              Icons.more_vert,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              // More options
+            },
+          ),
         ],
       ),
+      body: Container(
+        decoration: BoxDecoration(
+          // image: DecorationImage(
+          //   image: AssetImage(isDarkMode
+          //       ? 'assets/whatsapp_dark_bg.png' // You would need to add these assets
+          //       : 'assets/whatsapp_bg.png'),
+          //   repeat: ImageRepeat.repeat,
+          //   opacity: 0.5,
+          // ),
+          color: backgroundColor,
+        ),
+        child: Column(
+          children: [
+            Expanded(
+              child: _isLoading
+                  ? Center(
+                      child: CircularProgressIndicator(
+                        color: primaryColor,
+                      ),
+                    )
+                  : Stack(
+                      children: [
+                        _messages.isEmpty
+                            ? Center(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(
+                                      Icons.chat_bubble_outline,
+                                      size: 48,
+                                      color: primaryColor.withOpacity(0.5),
+                                    ),
+                                    const SizedBox(height: 16),
+                                    Text(
+                                      'No messages yet',
+                                      style: TextStyle(
+                                        color: isDarkMode
+                                            ? Colors.grey[400]
+                                            : Colors.grey[600],
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      'Be the first to send a message!',
+                                      style: TextStyle(
+                                        color: isDarkMode
+                                            ? Colors.grey[500]
+                                            : Colors.grey[800],
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : ListView.builder(
+                                reverse: true,
+                                controller: _scrollController,
+                                padding: const EdgeInsets.all(8),
+                                itemCount:
+                                    _messages.length + (_hasMore ? 1 : 0),
+                                itemBuilder: (context, index) {
+                                  if (index == _messages.length) {
+                                    return Center(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: SizedBox(
+                                          width: 24,
+                                          height: 24,
+                                          child: CircularProgressIndicator(
+                                            strokeWidth: 2,
+                                            color: primaryColor,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }
+
+                                  final message = _messages[index];
+                                  final isMe = message.userId == currentUserId;
+
+                                  // Check if we need a date header
+                                  final bool showDateHeader =
+                                      index == _messages.length - 1 ||
+                                          !_isSameDay(message.createdAt,
+                                              _messages[index + 1].createdAt);
+
+                                  return Column(
+                                    children: [
+                                      if (showDateHeader)
+                                        _buildDateHeader(message.createdAt),
+                                      _buildWhatsAppMessageBubble(
+                                          message, isMe),
+                                    ],
+                                  );
+                                },
+                              ),
+                        if (_isLoadingMore)
+                          Positioned(
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            child: LinearProgressIndicator(
+                              minHeight: 2,
+                              backgroundColor: primaryColor.withOpacity(0.2),
+                              color: primaryColor,
+                            ),
+                          ),
+                      ],
+                    ),
+            ),
+            if (!widget.messagingDisabled)
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
+                color: isDarkMode ? Colors.grey[900] : Colors.grey[200],
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: isDarkMode ? Colors.grey[800] : Colors.white,
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                        child: Row(
+                          children: [
+                            // IconButton(
+                            //   icon: Icon(
+                            //     Icons.emoji_emotions_outlined,
+                            //     color: isDarkMode
+                            //         ? Colors.grey[400]
+                            //         : Colors.grey[600],
+                            //   ),
+                            //   onPressed: () {
+                            //     // Emoji action
+                            //   },
+                            // ),
+                            const SizedBox(width: 20),
+                            Expanded(
+                              child: TextField(
+                                controller: _messageController,
+                                maxLines: null,
+                                keyboardType: TextInputType.multiline,
+                                textCapitalization:
+                                    TextCapitalization.sentences,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: isDarkMode
+                                      ? Colors.white
+                                      : Colors.black87,
+                                ),
+                                decoration: InputDecoration(
+                                  hintText: 'Type a message',
+                                  hintStyle: TextStyle(
+                                    color: isDarkMode
+                                        ? Colors.grey[400]
+                                        : Colors.grey[600],
+                                    fontSize: 16,
+                                  ),
+                                  border: InputBorder.none,
+                                  contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 10,
+                                    horizontal: 0,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            // IconButton(
+                            //   icon: Icon(
+                            //     Icons.attach_file,
+                            //     color: isDarkMode
+                            //         ? Colors.grey[400]
+                            //         : Colors.grey[600],
+                            //   ),
+                            //   onPressed: () {
+                            //     // Attachment action
+                            //   },
+                            // ),
+                            // IconButton(
+                            //   icon: Icon(
+                            //     Icons.camera_alt,
+                            //     color: isDarkMode
+                            //         ? Colors.grey[400]
+                            //         : Colors.grey[600],
+                            //   ),
+                            //   onPressed: () {
+                            //     // Camera action
+                            //   },
+                            // ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 6),
+                    GestureDetector(
+                      onTap: _sendMessage,
+                      child: Container(
+                        width: 48,
+                        height: 48,
+                        decoration: BoxDecoration(
+                          color: primaryColor,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          _messageController.text.trim().isEmpty
+                              ? Icons.send
+                              : Icons.mic,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+          ],
+        ),
+      ),
     );
+  }
+
+  bool _isSameDay(DateTime date1, DateTime date2) {
+    return date1.year == date2.year &&
+        date1.month == date2.month &&
+        date1.day == date2.day;
   }
 
   Future<void> _sendMessage() async {
@@ -402,6 +672,15 @@ class _ChatScreenState extends State<ChatScreen> {
           SnackBar(
             content: Text('Error sending message: $e'),
             backgroundColor: Colors.red,
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            action: SnackBarAction(
+              label: 'RETRY',
+              textColor: Colors.white,
+              onPressed: _sendMessage,
+            ),
           ),
         );
       }

@@ -38,7 +38,7 @@ class _SplashCheckState extends State<SplashCheck> {
         if (userRole == 'customer') {
           navigateToScreen(AnimatedNavBar());
           return;
-        } else if (userRole == 'master') {
+        } else if (userRole == 'dabbewala') {
           navigateToScreen(DabAnimatedNavBar());
           return;
         }

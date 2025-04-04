@@ -1,10 +1,10 @@
-
 import 'package:dabbawala/Customer/CustomerLogin/pages/Payment/pages/payment_history.dart';
 import 'package:dabbawala/Customer/CustomerLogin/pages/Profile/pages/edit_profile.dart';
 import 'package:dabbawala/Customer/CustomerLogin/pages/Settings/pages/setting_screen.dart';
 import 'package:dabbawala/features/Role/screen/roleselection.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../controller/profile_controller.dart';
@@ -12,8 +12,21 @@ import '../controller/profile_controller.dart';
 class CustProfile extends StatelessWidget {
   CustProfile({super.key});
 
-final ProfileController profileController = Get.put(ProfileController());
+  final ProfileController profileController = Get.put(ProfileController());
 
+  void logoutCustomer() {
+    final box = GetStorage();
+
+    // Remove the stored access token and user ID
+    box.remove('access_token');
+    box.remove('user_id');
+
+    // Optionally, you can navigate the user to the login screen or another page
+    Get.offAll(RoleSelectionPage());
+
+    // Return a confirmation or update UI if needed
+    print('User logged out successfully');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +41,8 @@ final ProfileController profileController = Get.put(ProfileController());
         ),
         title: Text(
           "profile".tr,
-          style: const TextStyle(
-              color: Colors.black, fontWeight: FontWeight.bold),
+          style:
+              const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
@@ -81,7 +94,7 @@ final ProfileController profileController = Get.put(ProfileController());
               Get.to(CustSettingscreen());
             }),
             _buildProfileOption(Icons.logout, "logout".tr, onTap: () {
-              Get.to(RoleSelectionPage());
+              logoutCustomer();
             }, textColor: Colors.red),
           ],
         ),

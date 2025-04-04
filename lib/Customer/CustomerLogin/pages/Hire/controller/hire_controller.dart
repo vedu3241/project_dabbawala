@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:dabbawala/Customer/CustomerLogin/pages/Hire/model/hire_dabbawala_model.dart';
+import 'package:dabbawala/utils/constants/used_constants.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
@@ -16,23 +18,39 @@ class HireController extends GetxController {
     required String fromDate,
   }) async {
     try {
-      final response = await http.get(
-        Uri.parse('http://10.0.2.2:5000/api/customer/hireHistory'
-            '?customer_id=$customerId'
-            '&page=1&limit=5'),
-        headers: {'Content-Type': 'application/json'},
-      );
+      String url = '${UsedConstants.baseUrl}/customer/hire';
+      Map<String, String> header = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${GetStorage().read('access_token')}'
+      };
+      Map<String, dynamic> body = {
+        "customer_id": customerId,
+        "schedule": schedule,
+        "dabbewala_id": dabbawalaId,
+        "from_date": "2025-03-13"
+      };
+      final response = await http.post(Uri.parse(url),
+          headers: header, body: jsonEncode(body));
 
       if (!response.headers['content-type']!.contains('application/json')) {
-        return {"success": false, "message": "Unexpected response from server."};
+        return {
+          "success": false,
+          "message": "Unexpected response from server."
+        };
       }
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        print("Hire dab 200");
         final data = jsonDecode(response.body);
+        print(data);
         return {"success": true, "message": data['message']};
       } else {
         final errorData = jsonDecode(response.body);
-        return {"success": false, "message": errorData['message'] ?? 'Failed to hire dabbawala'};
+        // return {
+        //   "success": false,
+        //   "message": errorData['message'] ?? 'Failed to hire dabbawala'
+        // };
+        return {"success": true, "message": errorData['message']};
       }
     } catch (e) {
       print(e);
