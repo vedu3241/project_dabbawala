@@ -17,7 +17,7 @@ class CustomAppBar extends StatelessWidget {
       padding: const EdgeInsets.only(top: 60, right: 20, left: 20, bottom: 0),
       child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.9,
-        height: MediaQuery.of(context).size.height * 0.25,
+        height: MediaQuery.of(context).size.height * 0.20,
         child: Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
@@ -30,20 +30,24 @@ class CustomAppBar extends StatelessWidget {
               // Welcome Text
               Row(
                 children: [
-                  Obx(
-                    () => Text(
-                      'Welcome, ${profileController.firstName.value.isEmpty 
-                          ? 'Guest' 
-                          : profileController.firstName.value}', // Updated here
-                      style: GoogleFonts.ubuntu(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  const Spacer(),
-                  const Icon(Icons.notifications, color: Colors.white),
+                  // Obx(
+                  //   () => Text(
+                  //     'welcome, ${profileController.firstName.value.isEmpty 
+                  //         ? 'Guest' 
+                  //         : profileController.firstName.value}', // Updated here
+                  //     style: GoogleFonts.ubuntu(
+                  //       color: Colors.white,
+                  //       fontSize: 18,
+                  //       fontWeight: FontWeight.bold,
+                  //     ),
+                  //   ),
+                  // ),
+                  // const Spacer(),
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     // Get.to(CustomerNotificationsPage(customerId: 'b436e769-6946-4ed2-b1c6-36a8d1fd3a64',));
+                  //   },
+                  //   child: const Icon(Icons.notifications, color: Colors.white)),
                 ],
               ),
               const SizedBox(height: 8),
@@ -53,7 +57,7 @@ class CustomAppBar extends StatelessWidget {
                   const Icon(Icons.location_on, color: Colors.white, size: 18),
                   const SizedBox(width: 4),
                   Text(
-                    "Themadbrains, Abohar",
+                    "mumbai".tr,
                     style: GoogleFonts.poppins(
                       color: Colors.white,
                       fontSize: 14,

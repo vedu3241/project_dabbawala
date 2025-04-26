@@ -136,10 +136,7 @@
 // }
 import 'dart:io';
 
-import 'package:dabbawala/features/ChatPage/screen/chat_list_screen.dart';
 import 'package:dabbawala/features/Multilanguage/LocalString.dart';
-import 'package:dabbawala/features/Role/screen/roleselection.dart';
-import 'package:dabbawala/features/SplashPage/screens/splash_page.dart';
 import 'package:dabbawala/features/authentication/screens/checkAuth/splash_screen.dart';
 import 'package:dabbawala/firebase_options.dart';
 import 'package:flutter/material.dart';
@@ -149,6 +146,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+import 'Customer/CustomerLogin/pages/Notification/controller/customer_notification.dart';
 
 // This function handles background messages
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -207,10 +206,12 @@ void main() async {
 
   // Handle token refreshes
   FirebaseMessaging.instance.onTokenRefresh.listen(saveTokenToSupabase);
-
+// Add this to your main() function or where you initialize other controllers
+Get.put(NotificationController());
   // Now that everything is initialized, run the app
   runApp(const MyApp());
 }
+
 
 // Save token to Supabase
 Future<void> saveTokenToSupabase(String? token) async {

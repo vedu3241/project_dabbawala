@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'dart:async';
-import 'package:timeago/timeago.dart' as timeago;
 
 class ChatMessage {
   final String id;
@@ -176,26 +175,22 @@ class _ChatScreenState extends State<ChatScreen> {
           .order('created_at', ascending: false)
           .range(_offset, _offset + _limit - 1);
 
-      if (response is List<dynamic>) {
-        final newMessages =
-            response.map((msg) => ChatMessage.fromMap(msg)).toList();
+      final newMessages =
+          response.map((msg) => ChatMessage.fromMap(msg)).toList();
 
-        if (mounted) {
-          setState(() {
-            if (initial) {
-              _messages.clear();
-            }
-            _messages.addAll(newMessages);
-            _hasMore = newMessages.length == _limit;
-            _offset += newMessages.length;
-            _isLoading = false;
-            _isLoadingMore = false;
-          });
-        }
-      } else {
-        throw Exception('Invalid response format');
+      if (mounted) {
+        setState(() {
+          if (initial) {
+            _messages.clear();
+          }
+          _messages.addAll(newMessages);
+          _hasMore = newMessages.length == _limit;
+          _offset += newMessages.length;
+          _isLoading = false;
+          _isLoadingMore = false;
+        });
       }
-    } catch (e) {
+        } catch (e) {
       debugPrint('Error loading messages: $e');
       if (mounted) {
         setState(() {

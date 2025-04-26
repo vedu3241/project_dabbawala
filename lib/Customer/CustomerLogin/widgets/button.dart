@@ -25,7 +25,7 @@ class Button extends StatelessWidget {
                 textStyle: TextStyle(fontSize: 18),
                 backgroundColor: Colors.redAccent),
             child: Text(
-              "Customer",
+              "customer".tr,
               style: GoogleFonts.figtree(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -45,7 +45,7 @@ class Button extends StatelessWidget {
               backgroundColor: Colors.orange,
             ),
             child: Text(
-              "Dabbawala",
+              "dabbawala".tr,
               style: GoogleFonts.figtree(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,

@@ -61,21 +61,21 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(height: 20),
                 // Welcome Text
                 Text(
-                  "Welcome back!",
+                  "welcome".tr,
                   style: GoogleFonts.ubuntu(
                       fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 5),
                 Text(
-                  "Login to your account",
+                  "sign_in_to_your_account".tr,
                   style: GoogleFonts.ubuntu(fontSize: 14, color: Colors.grey),
                 ),
                 SizedBox(height: 30),
                 // Username Field
-                buildTextField(usernameController, Icons.person, "Username"),
+                buildTextField(usernameController, Icons.person, "username".tr),
                 SizedBox(height: 15),
                 // Password Field
-                buildTextField(passwordController, Icons.lock, "Password",
+                buildTextField(passwordController, Icons.lock, "password".tr,
                     isPassword: true),
                 SizedBox(height: 20),
                 // Sign In Button
@@ -90,13 +90,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     backgroundColor: Colors.redAccent,
                     padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15),
                   ),
-                  child: Text("Sign in",
+                  child: Text("sign_in".tr,
                       style: GoogleFonts.ubuntu(
                           fontSize: 18, color: Colors.white)),
                 ),
                 SizedBox(height: 20),
                 // Social Login Divider
-                Text("Or sign in with",
+                Text("or_sign_in_with".tr,
                     style: GoogleFonts.ubuntu(color: Colors.grey)),
                 SizedBox(height: 15),
                 // Social Media Icons
@@ -115,13 +115,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Don't have an account? ",
+                    Text("dont_have_account".tr,
                         style: GoogleFonts.ubuntu(color: Colors.grey)),
                     GestureDetector(
                       onTap: () {
                         Get.to(SignupScreen());
                       },
-                      child: Text("Sign up here",
+                      child: Text("sign_up_here".tr,
                           style: GoogleFonts.ubuntu(
                               color: Colors.black38,
                               fontWeight: FontWeight.bold)),

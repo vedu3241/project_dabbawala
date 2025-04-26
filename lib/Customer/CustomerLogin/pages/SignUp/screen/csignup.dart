@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:dabbawala/Customer/CustomerLogin/pages/Login/screens/clogin.dart';
-import 'package:dabbawala/Customer/CustomerLogin/pages/Navigation/pages/custnavbar.dart';
 import 'package:dabbawala/Customer/CustomerLogin/pages/SignUp/controller/register_controller.dart';
 import 'package:dabbawala/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';

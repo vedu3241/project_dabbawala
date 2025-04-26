@@ -1,6 +1,7 @@
+
+import 'package:dabbawala/features/HireRequest/pages/dabbawala_request_Screen.dart';
 import 'package:dabbawala/features/ProfilePage/controller/profile_page_controller.dart';
 import 'package:dabbawala/features/ProfilePage/model/user_profile_model.dart';
-import 'package:dabbawala/features/ProfilePage/screens/editprofile_page.dart';
 import 'package:dabbawala/features/ProfilePage/screens/post_details_screen.dart';
 import 'package:dabbawala/features/Role/screen/roleselection.dart';
 import 'package:dabbawala/features/SettingsPage/screens/settings_page.dart';
@@ -9,7 +10,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 class DabbawalaProfileScreen extends StatefulWidget {
-  const DabbawalaProfileScreen({Key? key}) : super(key: key);
+  const DabbawalaProfileScreen({super.key});
 
   @override
   State<DabbawalaProfileScreen> createState() => _DabbawalaProfileScreenState();
@@ -180,12 +181,12 @@ class _DabbawalaProfileScreenState extends State<DabbawalaProfileScreen> {
                                               BorderRadius.circular(12),
                                         ),
                                         child: Row(
-                                          children: const [
+                                          children:  [
                                             Icon(Icons.verified,
                                                 color: Colors.blue, size: 16),
                                             SizedBox(width: 4),
                                             Text(
-                                              'Verified',
+                                              'verified'.tr,
                                               style: TextStyle(
                                                 color: Colors.blue,
                                                 fontWeight: FontWeight.bold,
@@ -194,8 +195,34 @@ class _DabbawalaProfileScreenState extends State<DabbawalaProfileScreen> {
                                           ],
                                         ),
                                       ),
+                                      const SizedBox(width: 8),
+                                      ElevatedButton.icon(
+                                        onPressed: () {
+                                          // 🔁 Open hire requests for this dabbawala
+                                          // Get.to(() => DabbawalaRequestScreen());
+                                        },
+                                        icon:
+                                            Icon(Icons.receipt_long, size: 16),
+                                        label: Text(
+                                          "my_request".tr,
+                                          style: TextStyle(fontSize: 12),
+                                        ),
+                                        style: ElevatedButton.styleFrom(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 10, vertical: 6),
+                                          textStyle: const TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                          backgroundColor: Colors.green[600],
+                                          foregroundColor: Colors.white,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                          ),
+                                        ),
+                                      ),
                                     ],
                                   ),
+
                                   IconButton(
                                       onPressed: logoutDabbawala,
                                       icon: Icon(
@@ -218,8 +245,8 @@ class _DabbawalaProfileScreenState extends State<DabbawalaProfileScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Text(
-                                    'Contact Information',
+                                   Text(
+                                    'contact_info'.tr,
                                     style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
@@ -254,12 +281,12 @@ class _DabbawalaProfileScreenState extends State<DabbawalaProfileScreen> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              profile!.address,
+                                              profile!.address.tr,
                                               style: TextStyle(fontSize: 16),
                                             ),
                                             SizedBox(height: 4),
                                             Text(
-                                              'Mumbai, Maharashtra - 400012',
+                                              'mumbai_maha_pin'.tr,
                                               style: TextStyle(
                                                 fontSize: 16,
                                                 color: Colors.grey,
@@ -285,8 +312,8 @@ class _DabbawalaProfileScreenState extends State<DabbawalaProfileScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Text(
-                                    'Delivery Stats',
+                                   Text(
+                                    'delivery_stats'.tr,
                                     style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
@@ -297,9 +324,9 @@ class _DabbawalaProfileScreenState extends State<DabbawalaProfileScreen> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceAround,
                                     children: [
-                                      _buildStatItem('5+ Years', 'Experience'),
-                                      _buildStatItem('98.7%', 'On-time'),
-                                      _buildStatItem('2,500+', 'Deliveries'),
+                                      _buildStatItem('experience_years'.tr, 'experience'.tr),
+                                      _buildStatItem('98.7%', 'on_time_deliveries'.tr),
+                                      _buildStatItem('2,500+', 'deliveries'.tr),
                                     ],
                                   ),
                                 ],
@@ -318,8 +345,8 @@ class _DabbawalaProfileScreenState extends State<DabbawalaProfileScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Text(
-                                    'Route Information',
+                                   Text(
+                                    'route_info'.tr,
                                     style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
@@ -332,13 +359,13 @@ class _DabbawalaProfileScreenState extends State<DabbawalaProfileScreen> {
                                       color: Colors.grey[100],
                                       borderRadius: BorderRadius.circular(8),
                                     ),
-                                    child: const Row(
+                                    child:  Row(
                                       children: [
                                         Icon(Icons.train, color: Colors.grey),
                                         SizedBox(width: 10),
                                         Expanded(
                                           child: Text(
-                                            'Dadar to Churchgate via Western Line',
+                                            'route_path'.tr,
                                             style: TextStyle(fontSize: 16),
                                           ),
                                         ),
@@ -352,14 +379,14 @@ class _DabbawalaProfileScreenState extends State<DabbawalaProfileScreen> {
                                       color: Colors.grey[100],
                                       borderRadius: BorderRadius.circular(8),
                                     ),
-                                    child: const Row(
+                                    child:  Row(
                                       children: [
                                         Icon(Icons.access_time,
                                             color: Colors.grey),
                                         SizedBox(width: 10),
                                         Expanded(
                                           child: Text(
-                                            'Pickup: 9:00 AM - 10:30 AM',
+                                            'pickup_time'.tr,
                                             style: TextStyle(fontSize: 16),
                                           ),
                                         ),
@@ -380,8 +407,8 @@ class _DabbawalaProfileScreenState extends State<DabbawalaProfileScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Text(
-                                    'Recent Posts',
+                                   Text(
+                                    'recent_post'.tr,
                                     style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,

@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 class DabbawalaResponse {
   final List<Dabbawala> users;
@@ -11,50 +10,56 @@ class DabbawalaResponse {
     required this.limit,
   });
 
-  factory DabbawalaResponse.fromJson(String str) =>
-      DabbawalaResponse.fromMap(json.decode(str));
-
   factory DabbawalaResponse.fromMap(Map<String, dynamic> json) => DabbawalaResponse(
         users: List<Dabbawala>.from(json["users"].map((x) => Dabbawala.fromMap(x))),
-        page: json["page"],
-        limit: json["limit"],
+        page: json["page"] ?? 0,
+        limit: json["limit"] ?? 0,
       );
 }
 
 class Dabbawala {
   final String id;
   final String name;
-  final String mobileNo;
-  final String username;
+  final String mobile_no;
   final String address;
-  final String? profilePicUrl;
-  final DateTime createdAt;
-  final int accessId;
   final String city;
+  final String? profilePicUrl;
 
   Dabbawala({
     required this.id,
     required this.name,
-    required this.mobileNo,
-    required this.username,
+    required this.mobile_no,
     required this.address,
-    this.profilePicUrl,
-    required this.createdAt,
-    required this.accessId,
     required this.city,
+    this.profilePicUrl,
   });
 
-  factory Dabbawala.fromJson(String str) => Dabbawala.fromMap(json.decode(str));
+ factory Dabbawala.fromMap(Map<String, dynamic> map) {
+  try {
+    return Dabbawala(
+      id: (map['id'] ?? '').toString(),
+      name: (map['name'] ?? '').toString(),
+      mobile_no: (map['mobile_no'] ?? '').toString().trim(), // corrected here
+      address: (map['address'] ?? '').toString(),
+      city: (map['city'] ?? '').toString(),
+      profilePicUrl: map['profilePicUrl']?.toString(),
+    );
+  } catch (e) {
+    print("Error parsing Dabbawala: $e\nData: $map");
+    rethrow;
+  }
+}
 
-  factory Dabbawala.fromMap(Map<String, dynamic> json) => Dabbawala(
-        id: json["id"],
-        name: json["name"],
-        mobileNo: json["mobile_no"].trim(),
-        username: json["username"],
-        address: json["address"],
-        profilePicUrl: json["profile_pic_url"],
-        createdAt: DateTime.parse(json["created_at"]),
-        accessId: json["access_id"],
-        city: json["city"],
-      );
+
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'mobileNo': mobile_no,
+      'address': address,
+      'city': city,
+      'profilePicUrl': profilePicUrl,
+    };
+  }
 }

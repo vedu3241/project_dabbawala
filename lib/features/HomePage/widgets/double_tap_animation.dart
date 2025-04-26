@@ -6,10 +6,10 @@ class DoubleTapLikeAnimation extends StatefulWidget {
   final VoidCallback onDoubleTap;
 
   const DoubleTapLikeAnimation({
-    Key? key,
+    super.key,
     required this.child,
     required this.onDoubleTap,
-  }) : super(key: key);
+  });
 
   @override
   _DoubleTapLikeAnimationState createState() => _DoubleTapLikeAnimationState();

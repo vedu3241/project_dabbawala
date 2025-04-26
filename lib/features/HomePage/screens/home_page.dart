@@ -1,6 +1,5 @@
 import 'package:dabbawala/features/HomePage/controller/posts_get_controller.dart';
 import 'package:dabbawala/features/HomePage/widgets/user_post.dart';
-import 'package:dabbawala/features/NotificationPage/screens/notificato_page.dart';
 import 'package:dabbawala/features/ReqDocument/screens/req_doc_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

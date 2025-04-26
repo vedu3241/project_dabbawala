@@ -41,11 +41,11 @@ class ProfileController extends GetxController {
   }
 
   /// Load Saved Profile Data (Optional Improvement)
-  Future<void> loadProfileData() async {
-    // This logic would ideally pull saved data from local storage or an API
-    firstName.value = "Zubair";
-    lastName.value = "Patel";
-    email.value = "zubairpatel0326@gmail.com";
-    profileImage.value = ""; // Load saved profile image if available
-  }
+  // Future<void> loadProfileData() async {
+  //   // This logic would ideally pull saved data from local storage or an API
+  //   firstName.value = "Zubair";
+  //   lastName.value = "Patel";
+  //   email.value = "zubairpatel0326@gmail.com";
+  //   profileImage.value = ""; // Load saved profile image if available
+  // }
 }

@@ -137,7 +137,7 @@ class UserPost extends StatelessWidget {
                         Obx(
                           () => postsController.isLoadingComments.value &&
                                   commentController.text.isNotEmpty
-                              ? Container(
+                              ? SizedBox(
                                   width: 24,
                                   height: 24,
                                   child:
@@ -387,7 +387,7 @@ class UserPost extends StatelessWidget {
                   text: TextSpan(
                     children: [
                       TextSpan(
-                        text: post.userName + " ",
+                        text: "${post.userName} ",
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
