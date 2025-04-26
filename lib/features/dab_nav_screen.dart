@@ -71,6 +71,7 @@ import 'package:dabbawala/features/AnalytisPage/screens/analytic_screen.dart';
 import 'package:dabbawala/features/ChatPage/screen/chat_list_screen.dart';
 import 'package:dabbawala/features/HomePage/screens/create_post.dart';
 import 'package:dabbawala/features/HomePage/screens/home_page.dart';
+import 'package:dabbawala/features/MyCustomers/Screens/DabbawalaHireRequestsScreen.dart';
 import 'package:dabbawala/features/ProfilePage/screens/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -83,16 +84,21 @@ class DabAnimatedNavBar extends StatelessWidget {
   final List<Widget> pages = [
     Homepage(),
     CreatePostPage(),
-    AnalyticScreen(),
+    // DashboardScreen(),
     ChatListScreen(),
+    DabbawalaHireRequestsScreen(
+      dabbawalaId: 'cec963b6-6dda-4195-8068-00d24de3442c',
+      dabbawalaName: 'Rajesh Kumar',
+    ),
     DabbawalaProfileScreen(),
   ];
 
   final List<String> imageList = [
     'assets/images/home.png',
     'assets/images/add.png',
-    'assets/images/analytics.png',
+    // 'assets/images/analytics.png',
     'assets/images/live-chat.png',
+    'assets/images/my_customer.png',
     'assets/images/profile_nav.png',
   ];
 

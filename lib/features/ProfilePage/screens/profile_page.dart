@@ -1,3 +1,4 @@
+import 'package:dabbawala/features/AnalytisPage/screens/analytic_screen.dart';
 import 'package:dabbawala/features/ProfilePage/controller/profile_page_controller.dart';
 import 'package:dabbawala/features/ProfilePage/model/user_profile_model.dart';
 import 'package:dabbawala/features/ProfilePage/screens/editprofile_page.dart';
@@ -7,6 +8,7 @@ import 'package:dabbawala/features/SettingsPage/screens/settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class DabbawalaProfileScreen extends StatefulWidget {
   const DabbawalaProfileScreen({Key? key}) : super(key: key);
@@ -206,6 +208,35 @@ class _DabbawalaProfileScreenState extends State<DabbawalaProfileScreen> {
                               ),
                             ),
 
+                            InkWell(
+                              onTap: () {
+                                Get.to(() => const DashboardScreen());
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.all(16),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 16),
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.analytics),
+                                    const SizedBox(width: 10),
+                                    Text(
+                                      "My Analytic",
+                                      style: GoogleFonts.ubuntu(
+                                        fontSize: 18,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 16,
+                            ),
                             // Contact and Address Section
                             Container(
                               padding: const EdgeInsets.all(16),

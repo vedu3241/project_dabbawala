@@ -1,5 +1,6 @@
 import 'package:dabbawala/features/Authentication/screens/SignUpPage/signup_screen.dart';
 import 'package:dabbawala/features/authentication/controllers/login_api_service.dart';
+import 'package:dabbawala/features/authentication/screens/LoginPage/otp_screen.dart';
 import 'package:dabbawala/features/dab_nav_screen.dart';
 import 'package:dabbawala/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
@@ -15,27 +16,24 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController usernameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  TextEditingController mobileNoController = TextEditingController();
 
   final LoginApiService _loginApiService = LoginApiService();
   //Login function
-  Future<void> login() async {
-    String username = usernameController.text.trim();
-    String password = passwordController.text.trim();
+  Future<void> getOtp() async {
+    String mobileNo = mobileNoController.text.trim();
 
     // Null check for username and password
-    if (username.isEmpty || password.isEmpty) {
-      THelperFunctions.showSnackBar("Please fill in both fields");
+    if (mobileNo.isEmpty) {
+      THelperFunctions.showSnackBar("Please Enter Mobile No");
       return; // Exit the method if either field is empty
     }
 
-    bool isSuccess = await _loginApiService.login(username, password);
+    bool isSuccess = await _loginApiService.getOtp(mobileNo);
 
     if (isSuccess) {
-      // Navigate to the next screen if login is successful
-      Get.to(DabAnimatedNavBar());
-      THelperFunctions.showSnackBar("Login successful");
+      // Navigate to the OTP screen!
+      Get.to(OtpScreen());
     } else {
       // Show error message if login failed
       THelperFunctions.showSnackBar("Login failed");
@@ -72,16 +70,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 SizedBox(height: 30),
                 // Username Field
-                buildTextField(usernameController, Icons.person, "Username"),
+                buildMobileNumberField(mobileNoController, countryCode: '+91'),
                 SizedBox(height: 15),
                 // Password Field
-                buildTextField(passwordController, Icons.lock, "Password",
-                    isPassword: true),
+                // buildTextField(passwordController, Icons.lock, "Password",
+                //     isPassword: true),
                 SizedBox(height: 20),
                 // Sign In Button
                 ElevatedButton(
                   onPressed: () {
-                    login();
+                    getOtp();
                   },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
@@ -90,26 +88,26 @@ class _LoginScreenState extends State<LoginScreen> {
                     backgroundColor: Colors.redAccent,
                     padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15),
                   ),
-                  child: Text("Sign in",
+                  child: Text("Get OTP",
                       style: GoogleFonts.ubuntu(
                           fontSize: 18, color: Colors.white)),
                 ),
-                SizedBox(height: 20),
-                // Social Login Divider
-                Text("Or sign in with",
-                    style: GoogleFonts.ubuntu(color: Colors.grey)),
-                SizedBox(height: 15),
-                // Social Media Icons
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    socialButton("assets/icons/google.png"),
-                    SizedBox(width: 20),
-                    socialButton("assets/icons/facebook.png"),
-                    SizedBox(width: 20),
-                    socialButton("assets/icons/twitter.png"),
-                  ],
-                ),
+                // SizedBox(height: 20),
+                // // Social Login Divider
+                // Text("Or sign in with",
+                //     style: GoogleFonts.ubuntu(color: Colors.grey)),
+                // SizedBox(height: 15),
+                // // Social Media Icons
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     socialButton("assets/icons/google.png"),
+                //     SizedBox(width: 20),
+                //     socialButton("assets/icons/facebook.png"),
+                //     SizedBox(width: 20),
+                //     socialButton("assets/icons/twitter.png"),
+                //   ],
+                // ),
                 SizedBox(height: 30),
                 // Sign Up Link
                 Row(
@@ -119,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: GoogleFonts.ubuntu(color: Colors.grey)),
                     GestureDetector(
                       onTap: () {
-                        Get.to(SignupScreen());
+                        Get.to(OtpScreen());
                       },
                       child: Text("Sign up here",
                           style: GoogleFonts.ubuntu(
@@ -136,9 +134,8 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget buildTextField(
-      TextEditingController controller, IconData icon, String hintText,
-      {bool isPassword = false}) {
+  Widget buildMobileNumberField(TextEditingController controller,
+      {String countryCode = '+91'}) {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -153,13 +150,34 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
       child: TextField(
         controller: controller,
-        obscureText: isPassword,
+        keyboardType: TextInputType.phone,
         decoration: InputDecoration(
-          prefixIcon: Icon(icon, color: Colors.black),
-          hintText: hintText,
+          prefixIcon: Container(
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  countryCode,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+                SizedBox(width: 8),
+                Container(
+                  width: 1,
+                  height: 20,
+                  color: Colors.black26,
+                ),
+              ],
+            ),
+          ),
+          hintText: "Enter mobile number",
           filled: true,
           fillColor: Colors.white,
-          contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+          contentPadding: EdgeInsets.symmetric(vertical: 15),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30),
             borderSide: BorderSide.none,
