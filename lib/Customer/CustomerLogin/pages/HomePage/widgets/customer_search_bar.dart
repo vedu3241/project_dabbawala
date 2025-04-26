@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rxdart/rxdart.dart';
 import 'dart:async';
@@ -36,7 +37,7 @@ class _CustomerSearchBarState extends State<CustomerSearchBar> {
     return TextField(
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.search, color: Colors.black38),
-        hintText: "Find Your Dabbawala",
+        hintText: "find_your_dabbawala".tr,
         hintStyle: GoogleFonts.poppins(color: Colors.black38),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),

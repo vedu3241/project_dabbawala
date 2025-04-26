@@ -122,6 +122,7 @@
 
 import 'package:dabbawala/features/ChatPage/model/group.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'chat_screen.dart';
@@ -226,7 +227,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        title: const Text('My Chats'),
+        title:  Text('my_chats'.tr),
         elevation: 0,
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,

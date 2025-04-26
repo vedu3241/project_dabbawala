@@ -230,7 +230,6 @@
 // UI update
 import 'dart:io';
 // import 'package:dabbawala/Customer/CustomerLogin/pages/Navigation/controller/custNavbar.dart';
-import 'package:dabbawala/features/HomePage/controller/posts_get_controller.dart';
 import 'package:dabbawala/utils/constants/used_constants.dart';
 import 'package:dabbawala/features/dab_nav_screen.dart';
 import 'package:flutter/material.dart';
@@ -241,7 +240,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 
 class CreatePostPage extends StatefulWidget {
-  const CreatePostPage({Key? key}) : super(key: key);
+  const CreatePostPage({super.key});
 
   @override
   _CreatePostPageState createState() => _CreatePostPageState();
@@ -381,7 +380,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Create Post',
+          'create_post'.tr,
           style: GoogleFonts.poppins(
             fontWeight: FontWeight.w600,
             fontSize: 20,
@@ -418,7 +417,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                       padding: EdgeInsets.symmetric(horizontal: 16),
                     ),
                     child: Text(
-                      'Post',
+                      'post'.tr,
                       style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w600,
                         fontSize: 16,
@@ -475,7 +474,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                             ),
                             SizedBox(height: 16),
                             Text(
-                              'Tap to add a photo',
+                              'tap_to_add_photo'.tr,
                               style: GoogleFonts.poppins(
                                 color: Colors.black54,
                                 fontSize: 16,
@@ -484,7 +483,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                             ),
                             SizedBox(height: 8),
                             Text(
-                              'Choose from gallery or take a new one',
+                              'choose_photo'.tr,
                               style: GoogleFonts.poppins(
                                 color: Colors.black38,
                                 fontSize: 14,
@@ -512,7 +511,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Caption',
+                      'caption'.tr,
                       style: GoogleFonts.poppins(
                         color: Colors.black87,
                         fontWeight: FontWeight.w600,
@@ -523,7 +522,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                     TextField(
                       controller: _captionController,
                       decoration: InputDecoration(
-                        hintText: 'Write something about your post...',
+                        hintText: 'write_about_post'.tr,
                         hintStyle: GoogleFonts.poppins(
                           color: Colors.black26,
                           fontSize: 15,

@@ -59,13 +59,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(height: 20),
                 // Welcome Text
                 Text(
-                  "Welcome back!",
+                  "welcome".tr,
                   style: GoogleFonts.ubuntu(
                       fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 5),
                 Text(
-                  "Login to your account",
+                  "sign_in_to_your_account".tr,
                   style: GoogleFonts.ubuntu(fontSize: 14, color: Colors.grey),
                 ),
                 SizedBox(height: 30),
@@ -113,13 +113,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Don't have an account? ",
+                    Text("dont_have_account".tr,
                         style: GoogleFonts.ubuntu(color: Colors.grey)),
                     GestureDetector(
                       onTap: () {
                         Get.to(OtpScreen());
                       },
-                      child: Text("Sign up here",
+                      child: Text("sign_up_here".tr,
                           style: GoogleFonts.ubuntu(
                               color: Colors.black38,
                               fontWeight: FontWeight.bold)),

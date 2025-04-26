@@ -83,10 +83,10 @@ class CustProfile extends StatelessWidget {
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                 )),
-            _buildProfileOption(Icons.edit, "Edit Profile", onTap: () {
+            _buildProfileOption(Icons.edit, "editprofile".tr, onTap: () {
               Get.to(EditProfile());
             }),
-            _buildProfileOption(Icons.payments, "Payment", onTap: () {
+            _buildProfileOption(Icons.payments, "payment".tr, onTap: () {
               Get.to(PaymentDetailsScreen());
             }),
             _buildProfileOption(Icons.notifications, "notification".tr),

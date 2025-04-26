@@ -1,5 +1,6 @@
 import 'package:dabbawala/Customer/CustomerLogin/widgets/button.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class RoleSelectionPage extends StatelessWidget {
@@ -20,7 +21,7 @@ class RoleSelectionPage extends StatelessWidget {
           children: [
             const Spacer(),
             Text(
-              "Login as?",
+              'login_as'.tr,
               style: GoogleFonts.figtree(
                   fontSize: 32, fontWeight: FontWeight.bold),
             ),

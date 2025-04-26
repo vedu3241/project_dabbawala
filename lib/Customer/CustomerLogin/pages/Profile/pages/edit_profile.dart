@@ -21,7 +21,7 @@ class _EditProfileState extends State<EditProfile> {
   @override
   void initState() {
     super.initState();
-    controller.loadProfileData(); // Load saved profile data when screen opens
+    // controller.loadProfileData(); // Load saved profile data when screen opens
 
     // Pre-fill controllers with loaded data
     firstNameController.text = controller.firstName.value;

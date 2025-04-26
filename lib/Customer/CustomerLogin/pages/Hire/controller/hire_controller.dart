@@ -1,87 +1,108 @@
+// import 'package:get/get.dart';
+
+// import '../../HomePage/model/dabbawala_model.dart';
+
+// class HireController extends GetxController {
+//   // Use a map to track requests with their status and details
+//   RxMap<String, Map<String, dynamic>> hireRequests = <String, Map<String, dynamic>>{}.obs;
+//   RxList<String> hiredDabbawalaIds = <String>[].obs;
+
+//   var currentCustomerInfo = {}.obs;
+
+//   void sendHireRequest(String dabbawalaId, String customerId, String plan, Dabbawala dabbawala) {
+//     // Store more information about the request
+//     hireRequests[dabbawalaId] = {
+//       'customerId': customerId,
+//       'plan': plan,
+//       'status': 'pending',
+//       'timestamp': DateTime.now().millisecondsSinceEpoch,
+//       'dabbawalaInfo': {
+//         'name': dabbawala.name,
+//         // Add other relevant dabbawala info
+//       }
+//     };
+//     update();
+//     // TODO: Save to backend or Firebase with status 'pending'
+//   }
+
+//   void updateHireStatus(String dabbawalaId, String newStatus) {
+//     if (hireRequests.containsKey(dabbawalaId)) {
+//       if (newStatus == 'accepted') {
+//         // Update the status in the requests map
+//         hireRequests[dabbawalaId]!['status'] = 'accepted';
+//         // Also add to hired list for easy access
+//         hiredDabbawalaIds.add(dabbawalaId);
+//       } else if (newStatus == 'rejected') {
+//         hireRequests[dabbawalaId]!['status'] = 'rejected';
+//       } else {
+//         hireRequests[dabbawalaId]!['status'] = newStatus;
+//       }
+//       update();
+//       // TODO: Update status in backend or Firebase
+//     }
+//   }
+
+//   // Helper getter methods for easy filtering
+//   List<String> get pendingDabbawalaIds => hireRequests.entries
+//       .where((entry) => entry.value['status'] == 'pending')
+//       .map((entry) => entry.key)
+//       .toList();
+
+//   List<String> get rejectedDabbawalaIds => hireRequests.entries
+//       .where((entry) => entry.value['status'] == 'rejected')
+//       .map((entry) => entry.key)
+//       .toList();
+// }
+
+// hire_controller.dart
 import 'dart:convert';
-import 'package:dabbawala/Customer/CustomerLogin/pages/Hire/model/hire_dabbawala_model.dart';
-import 'package:dabbawala/utils/constants/used_constants.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
+
+import '../../HomePage/model/dabbawala_model.dart';
+
 
 class HireController extends GetxController {
-  var selectedSchedule = ''.obs;
-  var selectedDate = Rxn<DateTime>();
-  var isSecure = false.obs;
+  var currentCustomerInfo = {}.obs;
+var hiredDabbawalas = <String>[];
+  Future<void> sendHireRequest(
+    String dabbawalaId,
+    String customerId,
+    String schedule,
+    Dabbawala dabbawala,
+  ) async {
+    final Uri url = Uri.parse("http://172.16.2.16:5000/api/customer/hire"); 
 
-  Future<Map<String, dynamic>> hireDabbawala({
-    required String customerId,
-    required String dabbawalaId,
-    required String schedule,
-    required String fromDate,
-  }) async {
+    final body = {
+      "customer_id": customerId,
+      "dabbewala_id": dabbawalaId,
+      "schedule": schedule.toLowerCase(), // Make sure it's in lowercase: weekly/monthly
+      "from_date": DateTime.now().toIso8601String().split("T")[0], 
+    };
+
     try {
-      String url = '${UsedConstants.baseUrl}/customer/hire';
-      Map<String, String> header = {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ${GetStorage().read('access_token')}'
-      };
-      Map<String, dynamic> body = {
-        "customer_id": customerId,
-        "schedule": schedule,
-        "dabbewala_id": dabbawalaId,
-        "from_date": "2025-03-13"
-      };
-      final response = await http.post(Uri.parse(url),
-          headers: header, body: jsonEncode(body));
-
-      if (!response.headers['content-type']!.contains('application/json')) {
-        return {
-          "success": false,
-          "message": "Unexpected response from server."
-        };
-      }
-
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        print("Hire dab 200");
-        final data = jsonDecode(response.body);
-        print(data);
-        return {"success": true, "message": data['message']};
-      } else {
-        final errorData = jsonDecode(response.body);
-        // return {
-        //   "success": false,
-        //   "message": errorData['message'] ?? 'Failed to hire dabbawala'
-        // };
-        return {"success": true, "message": errorData['message']};
-      }
-    } catch (e) {
-      print(e);
-      return {"success": false, "message": e.toString()};
-    }
-  }
-
-  Future<List<HireHistory>> fetchHireHistory(int page, int limit) async {
-    try {
-      final response = await http.get(
-        Uri.parse('http://10.0.2.2:5000/api/customer/hireHistory'
-            '?customer_id=805747c1-3412-4748-bead-677205f81630'
-            '&page=$page&limit=$limit'),
+      final response = await http.post(
+        url,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: jsonEncode(body),
       );
 
-      if (!response.headers['content-type']!.contains('application/json')) {
-        Get.snackbar("Error", "Unexpected response from server.");
-        return [];
-      }
-
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        return List<HireHistory>.from(
-          data['hireHistory'].map((x) => HireHistory.fromJson(x)),
-        );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final jsonResponse = jsonDecode(response.body);
+        Get.snackbar("Success", jsonResponse['message'],backgroundColor: Colors.green);
       } else {
-        throw Exception('Failed to fetch hire history');
+        Get.snackbar("Error", "Failed to hire dabbawala",backgroundColor: Colors.red);
+        print("Response: ${response.body}");
       }
     } catch (e) {
-      Get.snackbar("Error", e.toString());
-      return [];
+      print("Error sending request: $e");
+      Get.snackbar("Error", "Something went wrong",backgroundColor: Colors.red);
     }
   }
+
+  
 }

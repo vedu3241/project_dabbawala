@@ -395,7 +395,6 @@ import 'package:dabbawala/utils/constants/used_constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:get_storage/get_storage.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;

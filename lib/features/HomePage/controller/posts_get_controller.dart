@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'package:dabbawala/features/HomePage/models/comment_model.dart';
 import 'package:dabbawala/features/HomePage/models/post_model.dart';
 import 'package:dabbawala/utils/constants/used_constants.dart';
@@ -271,9 +270,4 @@ class PostsController extends GetxController {
     }
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-    // We'll let the initState in the widget handle the initial fetch
-  }
 }

@@ -20,8 +20,8 @@ class _LoginPageState extends State<LoginPage> {
 
 
    Future<void> clogin() async {
-    String email = emailController.text.trim();
-    String password = passwordController.text.trim();
+     String email = emailController.text.trim() ?? "";  // ✅ Handle null
+    String password = passwordController.text.trim() ?? "";
 
     // Null check for username and password
     if (email.isEmpty || password.isEmpty) {
@@ -59,21 +59,21 @@ bool isSuccess = await CLoginApiService().clogin(email, password);
                 SizedBox(height: 30),
                 // Welcome Text
                 Text(
-                  "Welcome back!",
+                  "welcome".tr,
                   style: GoogleFonts.poppins(
                       fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 5),
                 Text(
-                  "Sign In to your account",
+                  "sign_in_to_your_account".tr,
                   style: GoogleFonts.poppins(fontSize: 15, color: Colors.grey),
                 ),
                 SizedBox(height: 50),
                 // Username Field
-                buildTextField(Icons.mail, "Email",emailController),
+                buildTextField(Icons.mail, "email".tr, emailController),
                 SizedBox(height: 15),
                 // Password Field
-                buildTextField(Icons.lock, "Password", isPassword: true,passwordController),
+                buildTextField(Icons.lock, "password".tr, isPassword: true,passwordController),
                 SizedBox(height: 60),
                 // Sign In Button
                 ElevatedButton(
@@ -88,11 +88,11 @@ bool isSuccess = await CLoginApiService().clogin(email, password);
                     backgroundColor: Colors.redAccent,
                     padding: EdgeInsets.symmetric(horizontal: 60, vertical: 10),
                   ),
-                 child: Text("Sign In",style: GoogleFonts.figtree(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white),),
+                 child: Text("sign_in".tr,style: GoogleFonts.figtree(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white),),
                 ),
                 SizedBox(height: 30),
                 // Social Login Divider
-                Text("-------- Or sign in with --------", style: GoogleFonts.poppins(color: Colors.grey)),
+                Text("or_sign_in_with".tr, style: GoogleFonts.poppins(color: Colors.grey)),
                 SizedBox(height: 15),
                 // Social Media Icons
                 Row(
@@ -110,13 +110,13 @@ bool isSuccess = await CLoginApiService().clogin(email, password);
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Don't have an account? ",
+                    Text("dont_have_account".tr,
                         style: GoogleFonts.poppins(color: Colors.grey)),
                     GestureDetector(
                       onTap: () {
                         Get.to(SignupPage());
                       },
-                      child: Text("Sign up here",
+                      child: Text("sign_up_here".tr,
                           style: GoogleFonts.poppins(
                               color: Colors.black38, fontWeight: FontWeight.bold)),
                     )
