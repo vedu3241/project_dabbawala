@@ -34,7 +34,7 @@ class DabbawalaController extends GetxController {
 
   Future<DabbawalaResponse> fetchDabbawalasApi(int page, int limit) async {
     final response = await http.get(
-      Uri.parse('${UsedConstants.baseUrl3}/customer/dabbewala'),
+      Uri.parse('${UsedConstants.baseUrl}/customer/dabbewala'),
     );
 
     if (response.statusCode == 200) {

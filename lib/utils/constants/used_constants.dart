@@ -1,6 +1,6 @@
 class UsedConstants {
   // static String baseUrl = "http://127.0.0.1:5000/api";
-  static String baseUrl = "http://10.0.2.2:5000/api";
+  static String baseUrl = "https://b85t02mg-5000.inc1.devtunnels.ms/api/";
   // static String baseUrl = "https://dabbewala-u07u.onrender.com/api";
 
   static String authToken =
