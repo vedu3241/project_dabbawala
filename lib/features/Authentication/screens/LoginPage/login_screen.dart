@@ -33,7 +33,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (isSuccess) {
       // Navigate to the OTP screen!
-      Get.to(OtpScreen());
+      Get.to(OtpScreen(
+        mobileNo: mobileNo,
+      ));
     } else {
       // Show error message if login failed
       THelperFunctions.showSnackBar("Login failed");
@@ -117,7 +119,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: GoogleFonts.ubuntu(color: Colors.grey)),
                     GestureDetector(
                       onTap: () {
-                        Get.to(OtpScreen());
+                        Get.to(OtpScreen(
+                          mobileNo: mobileNoController.text,
+                        ));
                       },
                       child: Text("sign_up_here".tr,
                           style: GoogleFonts.ubuntu(

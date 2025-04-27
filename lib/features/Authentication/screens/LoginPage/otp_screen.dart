@@ -7,8 +7,9 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 class OtpScreen extends StatefulWidget {
-  const OtpScreen({super.key});
+  OtpScreen({super.key, required this.mobileNo});
 
+  String mobileNo;
   @override
   State<OtpScreen> createState() => _OtpScreenState();
 }
@@ -73,24 +74,22 @@ class _OtpScreenState extends State<OtpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('OTP Verification'),
-        centerTitle: true,
-      ),
+      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Form(
           key: _formKey,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
-                'Enter the 6-digit code',
+                'We just sent an SMS',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
               Text(
-                'We sent a verification code to your mobile number',
+                'Enter the security code we sent to ${widget.mobileNo}',
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.grey[600],
@@ -133,6 +132,7 @@ class _OtpScreenState extends State<OtpScreen> {
                 child: ElevatedButton(
                   onPressed: _submitOtp,
                   style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.redAccent,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -140,7 +140,7 @@ class _OtpScreenState extends State<OtpScreen> {
                   ),
                   child: const Text(
                     'Verify',
-                    style: TextStyle(fontSize: 18),
+                    style: TextStyle(fontSize: 18, color: Colors.white),
                   ),
                 ),
               ),
