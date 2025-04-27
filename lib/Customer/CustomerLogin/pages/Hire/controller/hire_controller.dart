@@ -60,7 +60,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:dabbawala/utils/constants/used_constants.dart';
 import '../../HomePage/model/dabbawala_model.dart';
 
 
@@ -73,7 +73,7 @@ var hiredDabbawalas = <String>[];
     String schedule,
     Dabbawala dabbawala,
   ) async {
-    final Uri url = Uri.parse("http://172.16.2.16:5000/api/customer/hire"); 
+    final Uri url = Uri.parse("${UsedConstants.baseUrl}/customer/hire"); 
 
     final body = {
       "customer_id": customerId,

@@ -38,7 +38,7 @@
 
 
 import 'dart:convert';
-
+import 'package:dabbawala/utils/constants/used_constants.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../../Hire/model/hire_dabbawala_model.dart';
@@ -63,7 +63,7 @@ class HireHistoryController extends GetxController {
       
       // Replace with your actual API endpoint
       final response = await http.get(
-        Uri.parse('http://172.16.2.16:5000/api/customer/hireHistory?customer_id=b436e769-6946-4ed2-b1c6-36a8d1fd3a64&page=1&limit=5'),
+        Uri.parse('${UsedConstants.baseUrl}/customer/hireHistory?customer_id=b436e769-6946-4ed2-b1c6-36a8d1fd3a64&page=1&limit=5'),
         headers: {
           'Content-Type': 'application/json',
           // 'Authorization': 'Bearer YOUR_AUTH_TOKEN', // Replace with actual auth
